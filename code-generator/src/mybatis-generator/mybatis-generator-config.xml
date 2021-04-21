@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <context id="context1" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/anime"
+                        userId="root" password="123456"/>
+
+        <!-- Them package va po class java-->
+        <javaModelGenerator targetPackage="com.kira.anime.pojo.po" targetProject="./src/main/java">
+        </javaModelGenerator>
+
+        <!-- Them package va class mapper java file-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources">
+        </sqlMapGenerator>
+
+        <!-- Them package va xml mapper file-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.kira.anime.mapper" targetProject="./src/main/java">
+        </javaClientGenerator>
+
+        <table tableName="anime_event" domainObjectName="EvenPO" mapperName="EvenMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_role" domainObjectName="RolePO" mapperName="RoleMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_role_detail" domainObjectName="RoleDetailPO" mapperName="RoleDetailMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_user" domainObjectName="UserPO" mapperName="UserMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_user_role" domainObjectName="UserRolePO" mapperName="UserRoleMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_comment" domainObjectName="CommentPO" mapperName="CommentMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_category" domainObjectName="CategoryPO" mapperName="CategoryMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_movie" domainObjectName="MoviePO" mapperName="MovieMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_episode" domainObjectName="EpisodePO" mapperName="EpisodeMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_server" domainObjectName="ServerPO" mapperName="ServerMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_rate" domainObjectName="RatePO" mapperName="RateMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_error_message" domainObjectName="ErrorMessagePO" mapperName="ErrorMessageMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="anime_user_event_log" domainObjectName="UserEvenLogPO" mapperName="UserEvenLogMapper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
+    </context>
+</generatorConfiguration>
