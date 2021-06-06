@@ -1,0 +1,52 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: blog-gateway
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+logging:
+  config: classpath:logback-${spring.profiles.active}.xml
+
+zuul:
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
+    max-total-connections: 500
+  retryable: true
+  # zuul default to open route for all services, for safety close it
+  ignored-services:
+  # take request host header info, if not may cause zuul redirect request with no cookie or other info.
+  add-host-header: true
+  # remove the sensitive headers info, or it will forbidden cookie info
+  sensitive-headers:
+  routes:
+    blog-admin: /admin/**
+    blog-app: /app/**
+
+#timeout com.kira.common.config
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeout-in-milliseconds: 60000
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+blog:
+  filter:
+    allowPaths:
+      - /admin/login
+      - /admin/users/insert
+      - /app/
+

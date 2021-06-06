@@ -63,6 +63,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}-${env}-1.0.0.${buildNumber}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

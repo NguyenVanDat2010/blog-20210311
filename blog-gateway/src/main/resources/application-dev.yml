@@ -1,0 +1,23 @@
+# eureka client settings
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://127.0.0.1:10099/eureka
+
+anime:
+  gateway:
+    auth:
+      allowUrl:
+        - /admin/login
+
+spring:
+  # redis configuration with no password
+  redis:
+    jedis:
+      pool:
+        max-idle: 5
+        min-idle: 5
+        max-active: 20
