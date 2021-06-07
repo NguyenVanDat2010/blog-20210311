@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableZuulProxy
-//@PropertySource("file:${propertyFileLocation}")
+@PropertySource("file:${propertyFileLocation}")
 public class GatewayApplication extends SpringBootServletInitializer {
 
 	@Override

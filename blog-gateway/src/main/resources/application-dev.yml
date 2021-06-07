@@ -4,10 +4,10 @@ eureka:
     prefer-ip-address: true
   client:
     registry-fetch-interval-seconds: 5
-    service-url:
-      defaultZone: http://127.0.0.1:10099/eureka
+#    service-url:
+#      defaultZone: http://127.0.0.1:10099/eureka
 
-anime:
+blog:
   gateway:
     auth:
       allowUrl:
