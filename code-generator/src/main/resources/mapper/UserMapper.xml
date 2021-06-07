@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kira.blog.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.kira.blog.pojo.po.UserPO">
+    <id column="user_uuid" jdbcType="VARCHAR" property="userUuid" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="cf_password" jdbcType="VARCHAR" property="cfPassword" />
+    <result column="old_password" jdbcType="VARCHAR" property="oldPassword" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="user_status" jdbcType="VARCHAR" property="userStatus" />
+    <result column="is_edit" jdbcType="CHAR" property="isEdit" />
+    <result column="is_delete" jdbcType="CHAR" property="isDelete" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="when_created" jdbcType="VARCHAR" property="whenCreated" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.kira.blog.pojo.po.UserPO">
+    <result column="avatar" jdbcType="LONGVARCHAR" property="avatar" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_uuid, role_id, full_name, email, username, password, cf_password, old_password, 
+    birthday, phone_number, gender, user_status, is_edit, is_delete, last_login_time, 
+    when_created, created_by, created_date, updated_by, updated_date
+  </sql>
+  <sql id="Blob_Column_List">
+    avatar
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_user
+    where user_uuid = #{userUuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from blog_user
+    where user_uuid = #{userUuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kira.blog.pojo.po.UserPO">
+    insert into blog_user (user_uuid, role_id, full_name, 
+      email, username, password, 
+      cf_password, old_password, birthday, 
+      phone_number, gender, user_status, 
+      is_edit, is_delete, last_login_time, 
+      when_created, created_by, created_date, 
+      updated_by, updated_date, avatar
+      )
+    values (#{userUuid,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{fullName,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{cfPassword,jdbcType=VARCHAR}, #{oldPassword,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{userStatus,jdbcType=VARCHAR}, 
+      #{isEdit,jdbcType=CHAR}, #{isDelete,jdbcType=CHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{whenCreated,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP}, #{avatar,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kira.blog.pojo.po.UserPO">
+    insert into blog_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userUuid != null">
+        user_uuid,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="fullName != null">
+        full_name,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="cfPassword != null">
+        cf_password,
+      </if>
+      <if test="oldPassword != null">
+        old_password,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="userStatus != null">
+        user_status,
+      </if>
+      <if test="isEdit != null">
+        is_edit,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="whenCreated != null">
+        when_created,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userUuid != null">
+        #{userUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="fullName != null">
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="cfPassword != null">
+        #{cfPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPassword != null">
+        #{oldPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isEdit != null">
+        #{isEdit,jdbcType=CHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="whenCreated != null">
+        #{whenCreated,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kira.blog.pojo.po.UserPO">
+    update blog_user
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="fullName != null">
+        full_name = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="cfPassword != null">
+        cf_password = #{cfPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPassword != null">
+        old_password = #{oldPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        user_status = #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isEdit != null">
+        is_edit = #{isEdit,jdbcType=CHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="whenCreated != null">
+        when_created = #{whenCreated,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where user_uuid = #{userUuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kira.blog.pojo.po.UserPO">
+    update blog_user
+    set role_id = #{roleId,jdbcType=INTEGER},
+      full_name = #{fullName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      cf_password = #{cfPassword,jdbcType=VARCHAR},
+      old_password = #{oldPassword,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=VARCHAR},
+      is_edit = #{isEdit,jdbcType=CHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      when_created = #{whenCreated,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      avatar = #{avatar,jdbcType=LONGVARCHAR}
+    where user_uuid = #{userUuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kira.blog.pojo.po.UserPO">
+    update blog_user
+    set role_id = #{roleId,jdbcType=INTEGER},
+      full_name = #{fullName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      cf_password = #{cfPassword,jdbcType=VARCHAR},
+      old_password = #{oldPassword,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=VARCHAR},
+      is_edit = #{isEdit,jdbcType=CHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      when_created = #{whenCreated,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
+    where user_uuid = #{userUuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

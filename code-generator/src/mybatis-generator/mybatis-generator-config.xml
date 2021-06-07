@@ -10,70 +10,62 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/anime"
-                        userId="root" password="123456"/>
+                        connectionURL="jdbc:mysql://localhost:3306/blog"
+                        userId="blogdata" password="123456"/>
 
         <!-- Them package va po class java-->
-        <javaModelGenerator targetPackage="com.kira.anime.pojo.po" targetProject="./src/main/java">
+        <javaModelGenerator targetPackage="com.kira.blog.pojo.po" targetProject="./src/main/java">
         </javaModelGenerator>
 
-        <!-- Them package va class mapper java file-->
+        <!-- Them package va xml mapper file-->
         <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources">
         </sqlMapGenerator>
 
-        <!-- Them package va xml mapper file-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.kira.anime.mapper" targetProject="./src/main/java">
+        <!-- Them package va class mapper java file-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.kira.blog.mapper" targetProject="./src/main/java">
         </javaClientGenerator>
 
-        <table tableName="anime_event" domainObjectName="EvenPO" mapperName="EvenMapper"
+        <table tableName="blog_module" domainObjectName="ModulePO" mapperName="ModuleMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="anime_role" domainObjectName="RolePO" mapperName="RoleMapper"
+        <table tableName="blog_role" domainObjectName="RolePO" mapperName="RoleMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="anime_role_detail" domainObjectName="RoleDetailPO" mapperName="RoleDetailMapper"
+        <table tableName="blog_access_right" domainObjectName="AccessRightPO" mapperName="AccessRightMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="anime_user" domainObjectName="UserPO" mapperName="UserMapper"
+        <table tableName="blog_user" domainObjectName="UserPO" mapperName="UserMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="anime_user_role" domainObjectName="UserRolePO" mapperName="UserRoleMapper"
+        <table tableName="blog_post" domainObjectName="PostPO" mapperName="PostMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="anime_comment" domainObjectName="CommentPO" mapperName="CommentMapper"
+        <table tableName="blog_comment" domainObjectName="CommentPO" mapperName="CommentMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="anime_category" domainObjectName="CategoryPO" mapperName="CategoryMapper"
+        <table tableName="blog_category" domainObjectName="CategoryPO" mapperName="CategoryMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="anime_movie" domainObjectName="MoviePO" mapperName="MovieMapper"
+<!--        <table tableName="blog_post_category" domainObjectName="PostCategoryPO" mapperName="PostCategoryMapper"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+        <table tableName="blog_tag" domainObjectName="TagPO" mapperName="TagMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="anime_episode" domainObjectName="EpisodePO" mapperName="EpisodeMapper"
+        <table tableName="blog_meta" domainObjectName="MetaPO" mapperName="MetaMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="anime_server" domainObjectName="ServerPO" mapperName="ServerMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
-        <table tableName="anime_rate" domainObjectName="RatePO" mapperName="RateMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
-        <table tableName="anime_error_message" domainObjectName="ErrorMessagePO" mapperName="ErrorMessageMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
-        <table tableName="anime_user_event_log" domainObjectName="UserEvenLogPO" mapperName="UserEvenLogMapper"
+        <table tableName="blog_user_event_log" domainObjectName="UserEvenLogPO" mapperName="UserEvenLogMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>

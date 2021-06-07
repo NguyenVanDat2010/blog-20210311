@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kira.blog.mapper.UserEvenLogMapper">
+  <resultMap id="BaseResultMap" type="com.kira.blog.pojo.po.UserEvenLogPO">
+    <id column="log_id" jdbcType="BIGINT" property="logId" />
+    <result column="user_uuid" jdbcType="VARCHAR" property="userUuid" />
+    <result column="post_id" jdbcType="BIGINT" property="postId" />
+    <result column="event_type" jdbcType="CHAR" property="eventType" />
+    <result column="event_session" jdbcType="CHAR" property="eventSession" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.kira.blog.pojo.po.UserEvenLogPOWithBLOBs">
+    <result column="event_name" jdbcType="LONGVARCHAR" property="eventName" />
+    <result column="details" jdbcType="LONGVARCHAR" property="details" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    log_id, user_uuid, post_id, event_type, event_session, created_by, updated_by, created_date, 
+    updated_date
+  </sql>
+  <sql id="Blob_Column_List">
+    event_name, details
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_user_event_log
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from blog_user_event_log
+    where log_id = #{logId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.kira.blog.pojo.po.UserEvenLogPOWithBLOBs">
+    insert into blog_user_event_log (log_id, user_uuid, post_id, 
+      event_type, event_session, created_by, 
+      updated_by, created_date, updated_date, 
+      event_name, details)
+    values (#{logId,jdbcType=BIGINT}, #{userUuid,jdbcType=VARCHAR}, #{postId,jdbcType=BIGINT}, 
+      #{eventType,jdbcType=CHAR}, #{eventSession,jdbcType=CHAR}, #{createdBy,jdbcType=VARCHAR}, 
+      #{updatedBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, 
+      #{eventName,jdbcType=LONGVARCHAR}, #{details,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kira.blog.pojo.po.UserEvenLogPOWithBLOBs">
+    insert into blog_user_event_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        log_id,
+      </if>
+      <if test="userUuid != null">
+        user_uuid,
+      </if>
+      <if test="postId != null">
+        post_id,
+      </if>
+      <if test="eventType != null">
+        event_type,
+      </if>
+      <if test="eventSession != null">
+        event_session,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
+      <if test="eventName != null">
+        event_name,
+      </if>
+      <if test="details != null">
+        details,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        #{logId,jdbcType=BIGINT},
+      </if>
+      <if test="userUuid != null">
+        #{userUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null">
+        #{postId,jdbcType=BIGINT},
+      </if>
+      <if test="eventType != null">
+        #{eventType,jdbcType=CHAR},
+      </if>
+      <if test="eventSession != null">
+        #{eventSession,jdbcType=CHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventName != null">
+        #{eventName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="details != null">
+        #{details,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kira.blog.pojo.po.UserEvenLogPOWithBLOBs">
+    update blog_user_event_log
+    <set>
+      <if test="userUuid != null">
+        user_uuid = #{userUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null">
+        post_id = #{postId,jdbcType=BIGINT},
+      </if>
+      <if test="eventType != null">
+        event_type = #{eventType,jdbcType=CHAR},
+      </if>
+      <if test="eventSession != null">
+        event_session = #{eventSession,jdbcType=CHAR},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventName != null">
+        event_name = #{eventName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="details != null">
+        details = #{details,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kira.blog.pojo.po.UserEvenLogPOWithBLOBs">
+    update blog_user_event_log
+    set user_uuid = #{userUuid,jdbcType=VARCHAR},
+      post_id = #{postId,jdbcType=BIGINT},
+      event_type = #{eventType,jdbcType=CHAR},
+      event_session = #{eventSession,jdbcType=CHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      event_name = #{eventName,jdbcType=LONGVARCHAR},
+      details = #{details,jdbcType=LONGVARCHAR}
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kira.blog.pojo.po.UserEvenLogPO">
+    update blog_user_event_log
+    set user_uuid = #{userUuid,jdbcType=VARCHAR},
+      post_id = #{postId,jdbcType=BIGINT},
+      event_type = #{eventType,jdbcType=CHAR},
+      event_session = #{eventSession,jdbcType=CHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+</mapper>

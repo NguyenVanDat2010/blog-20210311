@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kira.blog.mapper.PostMapper">
+  <resultMap id="BaseResultMap" type="com.kira.blog.pojo.po.PostPO">
+    <id column="post_id" jdbcType="BIGINT" property="postId" />
+    <result column="author_id" jdbcType="BIGINT" property="authorId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="post_status" jdbcType="CHAR" property="postStatus" />
+    <result column="meta_title" jdbcType="VARCHAR" property="metaTitle" />
+    <result column="slug" jdbcType="VARCHAR" property="slug" />
+    <result column="post_has_article" jdbcType="CHAR" property="postHasArticle" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.kira.blog.pojo.po.PostPOWithBLOBs">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    post_id, author_id, parent_id, title, summary, post_status, meta_title, slug, post_has_article, 
+    article_title, created_by, created_date, updated_by, updated_date
+  </sql>
+  <sql id="Blob_Column_List">
+    content, article_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_post
+    where post_id = #{postId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from blog_post
+    where post_id = #{postId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.kira.blog.pojo.po.PostPOWithBLOBs">
+    insert into blog_post (post_id, author_id, parent_id, 
+      title, summary, post_status, 
+      meta_title, slug, post_has_article, 
+      article_title, created_by, created_date, 
+      updated_by, updated_date, content, 
+      article_content)
+    values (#{postId,jdbcType=BIGINT}, #{authorId,jdbcType=BIGINT}, #{parentId,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{postStatus,jdbcType=CHAR}, 
+      #{metaTitle,jdbcType=VARCHAR}, #{slug,jdbcType=VARCHAR}, #{postHasArticle,jdbcType=CHAR}, 
+      #{articleTitle,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}, 
+      #{articleContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kira.blog.pojo.po.PostPOWithBLOBs">
+    insert into blog_post
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="postId != null">
+        post_id,
+      </if>
+      <if test="authorId != null">
+        author_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+      <if test="postStatus != null">
+        post_status,
+      </if>
+      <if test="metaTitle != null">
+        meta_title,
+      </if>
+      <if test="slug != null">
+        slug,
+      </if>
+      <if test="postHasArticle != null">
+        post_has_article,
+      </if>
+      <if test="articleTitle != null">
+        article_title,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="articleContent != null">
+        article_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="postId != null">
+        #{postId,jdbcType=BIGINT},
+      </if>
+      <if test="authorId != null">
+        #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="postStatus != null">
+        #{postStatus,jdbcType=CHAR},
+      </if>
+      <if test="metaTitle != null">
+        #{metaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="slug != null">
+        #{slug,jdbcType=VARCHAR},
+      </if>
+      <if test="postHasArticle != null">
+        #{postHasArticle,jdbcType=CHAR},
+      </if>
+      <if test="articleTitle != null">
+        #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleContent != null">
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kira.blog.pojo.po.PostPOWithBLOBs">
+    update blog_post
+    <set>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="postStatus != null">
+        post_status = #{postStatus,jdbcType=CHAR},
+      </if>
+      <if test="metaTitle != null">
+        meta_title = #{metaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="slug != null">
+        slug = #{slug,jdbcType=VARCHAR},
+      </if>
+      <if test="postHasArticle != null">
+        post_has_article = #{postHasArticle,jdbcType=CHAR},
+      </if>
+      <if test="articleTitle != null">
+        article_title = #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleContent != null">
+        article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where post_id = #{postId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kira.blog.pojo.po.PostPOWithBLOBs">
+    update blog_post
+    set author_id = #{authorId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      post_status = #{postStatus,jdbcType=CHAR},
+      meta_title = #{metaTitle,jdbcType=VARCHAR},
+      slug = #{slug,jdbcType=VARCHAR},
+      post_has_article = #{postHasArticle,jdbcType=CHAR},
+      article_title = #{articleTitle,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR},
+      article_content = #{articleContent,jdbcType=LONGVARCHAR}
+    where post_id = #{postId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kira.blog.pojo.po.PostPO">
+    update blog_post
+    set author_id = #{authorId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      post_status = #{postStatus,jdbcType=CHAR},
+      meta_title = #{metaTitle,jdbcType=VARCHAR},
+      slug = #{slug,jdbcType=VARCHAR},
+      post_has_article = #{postHasArticle,jdbcType=CHAR},
+      article_title = #{articleTitle,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
+    where post_id = #{postId,jdbcType=BIGINT}
+  </update>
+</mapper>
