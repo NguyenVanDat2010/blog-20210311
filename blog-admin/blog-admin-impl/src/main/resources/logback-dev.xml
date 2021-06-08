@@ -25,14 +25,14 @@
     </appender>
 
     <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/blog-gateway.log</file>
+        <file>${log.path}/blog-admin.log</file>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- log backup -->
-            <fileNamePattern>${log.path}/gateway/blog-gateway-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <fileNamePattern>${log.path}/admin/blog-admin-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>${maxFileSize}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -40,7 +40,7 @@
         </rollingPolicy>
     </appender>
 
-    <springProfile name="uat">
+    <springProfile name="dev">
         <logger name="com.kira.blog" level="debug"/>
     </springProfile>
 

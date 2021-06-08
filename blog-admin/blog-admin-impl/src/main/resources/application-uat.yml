@@ -1,0 +1,66 @@
+# eureka client settings
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    # for dev mode, 5s is enough to fetch services from registry;
+    # once active prod configuration, it should the default value: 30s
+    registry-fetch-interval-seconds: 5
+
+
+spring:
+  # datasource configuration
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 100
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  # redis configuration with no password
+  redis:
+    jedis:
+      pool:
+        max-idle: 5
+        min-idle: 5
+        max-active: 20
+  #quartz configuration
+#  quartz:
+#    # rewrite the existing jobs
+#    overwrite-existing-jobs: true
+#    properties:
+#      org:
+#        quartz:
+#          scheduler:
+#            instanceName: anime-job
+#            instanceId: AUTO
+#          jobStore:
+#            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#            tablePrefix: QRTZ_
+#            isClustered: true
+#            clusterCheckinInterval: 10000
+#            useProperties: false
+#          threadPool:
+#            class: org.quartz.simpl.SimpleThreadPool
+#            threadCount: 10
+#            threadPriority: 5
+#            threadsInheritContextClassLoaderOfInitializingThread: true
+#    # the way of database
+#    job-store-type: jdbc
+
+#anime:
+#  imagePath: /apps/images/customer/
+#  coverImgPath: /apps/images/application/
+#
+#jasypt:
+#  encryptor:
+#    password: d4Ta@Qrj

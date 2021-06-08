@@ -1,0 +1,27 @@
+server:
+  port: 9030
+
+spring:
+  application:
+    name: blog-system
+  profiles:
+    active: dev
+
+logging:
+  config: classpath:logback-${spring.profiles.active}.xml
+
+mybatis:
+  mapperlocations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 60000
+        readTimeout: 60000
+
+blog:
+  filter:
+    allowPaths:
+      - /admin/login
