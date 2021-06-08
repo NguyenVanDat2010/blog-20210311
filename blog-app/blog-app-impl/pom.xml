@@ -18,6 +18,16 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>com.kira</groupId>
+			<artifactId>blog-app-interface</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.kira</groupId>
+			<artifactId>blog-admin-interface</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 
 	</dependencies>
 

@@ -20,11 +20,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.kira</groupId>
-			<artifactId>blog-common</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.kira</groupId>
 			<artifactId>blog-admin-interface</artifactId>
 			<version>0.0.1</version>
 		</dependency>
