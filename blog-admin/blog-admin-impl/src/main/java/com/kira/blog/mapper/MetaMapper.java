@@ -1,7 +1,9 @@
 package com.kira.blog.mapper;
 
 import com.kira.blog.pojo.po.MetaPO;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface MetaMapper {
     int deleteByPrimaryKey(Long metaId);
 

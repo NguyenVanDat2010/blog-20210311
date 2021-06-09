@@ -1,7 +1,9 @@
 package com.kira.blog.mapper;
 
 import com.kira.blog.pojo.po.RolePO;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface RoleMapper {
     int deleteByPrimaryKey(Long roleId);
 

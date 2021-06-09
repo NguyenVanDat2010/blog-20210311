@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: blog-system
+    name: blog-admin
   profiles:
     active: dev
 

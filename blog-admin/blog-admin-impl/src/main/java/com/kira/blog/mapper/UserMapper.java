@@ -1,7 +1,9 @@
 package com.kira.blog.mapper;
 
 import com.kira.blog.pojo.po.UserPO;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(String userUuid);
 
