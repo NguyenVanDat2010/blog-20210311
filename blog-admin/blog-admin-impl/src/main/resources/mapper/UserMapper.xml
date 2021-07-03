@@ -3,7 +3,7 @@
 <mapper namespace="com.kira.blog.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.kira.blog.pojo.po.UserPO">
     <id column="user_uuid" jdbcType="VARCHAR" property="userUuid" />
-    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="full_name" jdbcType="VARCHAR" property="fullName" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="username" jdbcType="VARCHAR" property="username" />
@@ -310,4 +310,13 @@
       updated_date = #{updatedDate,jdbcType=TIMESTAMP}
     where user_uuid = #{userUuid,jdbcType=VARCHAR}
   </update>
+
+  <select id="getUserByUsername" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -18,4 +18,6 @@ public interface UserMapper {
     int updateByPrimaryKeyWithBLOBs(UserPO record);
 
     int updateByPrimaryKey(UserPO record);
+
+    UserPO getUserByUsername(String username);
 }

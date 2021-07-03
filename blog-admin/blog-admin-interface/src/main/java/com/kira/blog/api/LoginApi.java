@@ -1,7 +1,9 @@
 package com.kira.blog.api;
 
 import com.kira.blog.pojo.dto.LoginDTO;
+import com.kira.blog.pojo.dto.SignUpDTO;
 import com.kira.blog.pojo.vo.LoginVO;
+import com.kira.blog.pojo.vo.SignUpVO;
 import com.kira.blog.response.ResponseBase;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 
 //@RequestMapping
 public interface LoginApi {
+
+    @ApiOperation("SignUp: User sign up")
+    @PostMapping("/signup")
+    ResponseBase<SignUpVO> signUp(@Validated @RequestBody SignUpDTO signUpDTO);
 
     @ApiOperation("Login: User login")
     @PostMapping("/login")

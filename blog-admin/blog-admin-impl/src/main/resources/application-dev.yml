@@ -6,6 +6,8 @@ eureka:
     # for dev mode, 5s is enough to fetch services from registry;
     # once active prod configuration, it should the default value: 30s
     registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://localhost:10099/eureka
 
 spring:
   # datasource configuration

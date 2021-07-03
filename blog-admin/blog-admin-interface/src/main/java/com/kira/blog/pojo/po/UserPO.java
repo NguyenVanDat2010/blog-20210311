@@ -8,7 +8,7 @@ import java.util.Date;
 public class UserPO {
     private String userUuid;
 
-    private Integer roleId;
+    private Long roleId;
 
     private String fullName;
 

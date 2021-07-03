@@ -44,7 +44,7 @@ spring:
 #      org:
 #        quartz:
 #          scheduler:
-#            instanceName: hlb-job
+#            instanceName: blog-job
 #            instanceId: AUTO
 #          jobStore:
 #            class: org.quartz.impl.jdbcjobstore.JobStoreTX
@@ -62,8 +62,8 @@ spring:
 #    job-store-type: jdbc
 
 #blog:
-#  imagePath: /nfs/hlb/customer/
-#  coverImgPath: /nfs/hlb/application/
+#  imagePath: /nfs/blog/customer/
+#  coverImgPath: /nfs/blog/application/
 #
 #jasypt:
 #  encryptor:

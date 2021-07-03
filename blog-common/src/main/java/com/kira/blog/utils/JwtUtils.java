@@ -24,11 +24,9 @@ public class JwtUtils {
      */
     public static String generateToken(JwtPayload payload, String priKey, long expireMinutes) throws Exception {
         return Jwts.builder()
-                .claim(JwtConst.USER_UUID, payload.getUserUuid())
                 .claim(JwtConst.USERNAME, payload.getUsername())
-//                .claim(JwtConst.ROLE_RIGHT, payload.getRoleRight())
-//                .claim(JwtConst.ROLE_CODE, payload.getRoleCode())
-                .claim(JwtConst.USER_ROLES, payload.getUserRoles())
+                .claim(JwtConst.ROLE_RIGHT, payload.getRoleRight())
+                .claim(JwtConst.ROLE_STATUS, payload.getRoleStatus())
                 .setExpiration(Date.from(LocalDateTime.now()
                         .plusMinutes(expireMinutes)
                         .atZone(ZoneId.systemDefault())
@@ -63,12 +61,10 @@ public class JwtUtils {
         Claims body = claimsJws.getBody();
         Map<String, String> userRoles = (Map<String, String>) body.get(JwtConst.USER_ROLES);
         return new JwtPayload(
-                String.valueOf(body.get(JwtConst.USER_UUID)),
-                String.valueOf(body.get(JwtConst.USERNAME)),
-                userRoles
 //                String.valueOf(body.get(JwtConst.DEVICE_ID)),
-//                String.valueOf(body.get(JwtConst.ROLE_RIGHT)),
-//                String.valueOf(body.get(JwtConst.ROLE_CODE))
+                String.valueOf(body.get(JwtConst.USERNAME)),
+                String.valueOf(body.get(JwtConst.ROLE_RIGHT)),
+                String.valueOf(body.get(JwtConst.ROLE_STATUS))
         );
     }
 

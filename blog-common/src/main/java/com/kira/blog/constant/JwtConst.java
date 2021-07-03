@@ -6,11 +6,11 @@ public interface JwtConst {
 
     String USERNAME = "username";
 
-//    String ROLE_RIGHT = "roleRight";
-//
+    String ROLE_RIGHT = "roleRight";
+
 //    String DEVICE_ID = "deviceId";
 
-//    String ROLE_CODE = "roleCode";
+    String ROLE_STATUS = "roleStatus";
 
     String USER_ROLES = "userRoles";
 

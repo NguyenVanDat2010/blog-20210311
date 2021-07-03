@@ -2,7 +2,9 @@ package com.kira.blog.controller;
 
 import com.kira.blog.api.LoginApi;
 import com.kira.blog.pojo.dto.LoginDTO;
+import com.kira.blog.pojo.dto.SignUpDTO;
 import com.kira.blog.pojo.vo.LoginVO;
+import com.kira.blog.pojo.vo.SignUpVO;
 import com.kira.blog.response.ResponseBase;
 import com.kira.blog.response.ResponseUtils;
 import com.kira.blog.service.LoginService;
@@ -21,10 +23,16 @@ public class LoginController implements LoginApi {
     @Resource
     private LoginService loginService;
 
+    @Override
+    public ResponseBase<SignUpVO> signUp (SignUpDTO signUpDTO){
+        logger.info("LoginController, sign up with username is {}", signUpDTO);
+        SignUpVO signUpVO = loginService.signUp(signUpDTO);
+        return ResponseUtils.ok(signUpVO);
+    }
 
     @Override
     public ResponseBase<LoginVO> login(LoginDTO loginDTO) {
-        logger.info("LoginController, login with username is {}", loginDTO);
+        logger.info("LoginController, login with username is {}", loginDTO.getUsername());
         LoginVO loginVO = loginService.login(loginDTO);
         return ResponseUtils.ok(loginVO);
     }

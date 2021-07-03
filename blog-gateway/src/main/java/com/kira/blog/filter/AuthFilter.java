@@ -126,10 +126,9 @@ public class AuthFilter extends ZuulFilter {
             return null;
         }
         ctx.addZuulRequestHeader("userUuid", infoFromToken.getUsername());
-        ctx.addZuulRequestHeader("username", infoFromToken.getUsername());
-        ctx.addZuulRequestHeader("userRoles", infoFromToken.getUserRoles().toString());
+        ctx.addZuulRequestHeader("roleRight", infoFromToken.getRoleRight());
+        ctx.addZuulRequestHeader("roleStatus", infoFromToken.getRoleStatus());
 //        ctx.addZuulRequestHeader("deviceId", infoFromToken.getDeviceId());
-//        ctx.addZuulRequestHeader("roleRight", infoFromToken.getRoleRight());
         return null;
     }
 }

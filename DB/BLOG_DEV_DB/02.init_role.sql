@@ -6,6 +6,7 @@ TRUNCATE TABLE `blog`.`blog_access_right`;
 -- init the super user role and default 4 roles
 INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('Super Admin', 'SAD');
 INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('Maker or checker as Admin', 'MC');
+INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('User', 'UE');
 INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('No need', 'NA');
 
 -- init the blog_module
@@ -39,6 +40,13 @@ INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`
 INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cme', '3', 'RW');
 INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('tge', '3', 'RW');
 INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('mte', '3', 'NA');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('ue', '4', 'NA');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('rae', '4', 'NA');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('pe', '4', 'RO');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cte', '4', 'RO');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cme', '4', 'RO');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('tge', '4', 'RO');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('mte', '4', 'NA');
 
 -- init the user //pass: 123456a@  or 123456
 INSERT INTO `blog`.`blog_user` (`user_uuid`, `role_id`, `full_name`, `email`, `username`, `password`, `cf_password`, `birthday`, `phone_number`, `gender`) VALUES ('ed2f8903c46d47658d9d9e1c06caeb70', '1', 'Nguyen Van Dat', 'datdhvinh@gmail.com', 'Kira', '$2a$10$XMe4HY4TmmSXJ.Ih8EHt8eb4tTsed6JSow5vCntfSbwRhFaHL7Qn.','$2a$10$JMPP2gHz/khRBcQaNRG4sOq6mFKgFCxTxp7ogDZvyGeIioM3OmUoe', '1995-08-28', '0967838708', 'Male');

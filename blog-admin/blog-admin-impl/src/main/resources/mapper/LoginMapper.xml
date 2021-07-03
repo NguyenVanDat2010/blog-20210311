@@ -2,10 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kira.blog.mapper.LoginMapper">
     <resultMap id="LoginVOResultMap" type="com.kira.blog.pojo.vo.LoginVO">
-        <result column="" property=""/>
+        <result column="username" property="username"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_right" property="roleRight"/>
+        <result column="role_status" property="roleStatus"/>
+        <collection property="accessRights" ofType="com.kira.blog.pojo.po.AccessRightPO">
+            <result column="module_code" property="moduleCode"/>
+            <result column="access_right" property="accessRight"/>
+            <result column="sort" property="sort"/>
+        </collection>
     </resultMap>
 
     <update id="updateLoginTime"></update>
 
-    <select id="getUserByUsername" resultType="com.kira.blog.pojo.vo.LoginVO"></select>
+    <select id="getUserByUsername" resultMap="LoginVOResultMap">
+        SELECT
+            bu.username,
+            br.role_name,
+            br.role_right,
+            br.role_status,
+            bar.module_code,
+            bar.access_right,
+            bm.sort
+        FROM
+            blog_user bu,
+            blog_role br,
+            blog_access_right bar,
+            blog_module bm
+        WHERE
+            bu.username = #{username}
+          AND br.role_id = bu.role_id
+          AND bar.role_id = bu.role_id
+          AND bu.user_status = 'Active'
+          AND bm.module_code = bar.module_code
+        order by bm.sort ASC
+    </select>
 </mapper>

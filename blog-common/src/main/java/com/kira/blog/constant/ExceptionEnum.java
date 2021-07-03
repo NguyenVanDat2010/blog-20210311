@@ -46,9 +46,7 @@ public enum ExceptionEnum {
 
     NOTICE_NOT_EXIST("600018", "This notification not exist."),
     NOTICE_IN_EDIT("600019", "This notification is in edit, cannot update now."),
-
     USERNAME_FORMAT_ERROR("600020", "Sorry, Login name format should be "),
-
     DUPLICATE_OPERATION("600021", "Please do not execute duplicate operation."),
 
     /*

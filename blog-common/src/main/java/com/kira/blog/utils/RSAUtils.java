@@ -471,7 +471,7 @@ public class RSAUtils {
         String encrypt = RSAUtils.encrypt(aesKey, RSAUtils.getPublicKey(ocrPubKey));
         System.out.println("eKYC RSA com.kira.common.utils com.kira.common.response result is: " + encrypt);
         String result = RsaUtils.encryptByPublicKey(aesKey, ocrPubKey);
-        System.out.println("HLB  RSA com.kira.common.utils com.kira.common.response result is: " + result);
+        System.out.println("BLOG  RSA com.kira.common.utils com.kira.common.response result is: " + result);
     }*/
 
 

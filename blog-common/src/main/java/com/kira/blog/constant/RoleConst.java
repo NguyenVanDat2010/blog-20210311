@@ -8,7 +8,7 @@ public interface RoleConst {
 
     String ACCESS_RIGHT = "RO,NA,RW";
 
-    String ROLE_RIGHT = "MC,NA";
+    String ROLE_RIGHT = "SAD,MC,UE,NA";
 
     // need maker and checker workflow
     String ROLE_RIGHT_MC = "MC";
