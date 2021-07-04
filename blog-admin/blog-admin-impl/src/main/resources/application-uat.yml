@@ -40,7 +40,7 @@ spring:
 #      org:
 #        quartz:
 #          scheduler:
-#            instanceName: anime-job
+#            instanceName: blog-job
 #            instanceId: AUTO
 #          jobStore:
 #            class: org.quartz.impl.jdbcjobstore.JobStoreTX
@@ -57,7 +57,7 @@ spring:
 #    # the way of database
 #    job-store-type: jdbc
 
-#anime:
+#blog:
 #  imagePath: /apps/images/customer/
 #  coverImgPath: /apps/images/application/
 #

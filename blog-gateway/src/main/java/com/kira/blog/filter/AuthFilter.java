@@ -1,7 +1,7 @@
 package com.kira.blog.filter;
 
 import com.alibaba.fastjson.JSONObject;
-import com.kira.blog.enums.AuthFilterProperty;
+import com.kira.blog.config.AuthFilterProperty;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;

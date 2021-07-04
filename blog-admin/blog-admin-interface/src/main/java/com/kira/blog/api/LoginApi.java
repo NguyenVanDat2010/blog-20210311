@@ -13,20 +13,21 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
-//@RequestMapping
+@RequestMapping
 public interface LoginApi {
 
     @ApiOperation("SignUp: User sign up")
     @PostMapping("/signup")
-    ResponseBase<SignUpVO> signUp(@Validated @RequestBody SignUpDTO signUpDTO);
+    ResponseBase<SignUpVO> signUp(@RequestBody @Validated SignUpDTO signUpDTO);
 
     @ApiOperation("Login: User login")
     @PostMapping("/login")
-    ResponseBase<LoginVO> login(@Validated @RequestBody LoginDTO loginDTO);
+    ResponseBase<LoginVO> login(@RequestBody @Validated LoginDTO loginDTO);
 
     @ApiOperation("Logout: User logout")
     @PostMapping("/logout")
-    ResponseBase logout(@Validated @RequestHeader("username") String username, HttpServletRequest request);
+    ResponseBase logout(@RequestHeader("username") @Valid String username, HttpServletRequest request);
 
 }

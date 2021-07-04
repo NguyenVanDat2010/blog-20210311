@@ -47,6 +47,6 @@ blog:
   filter:
     allowPaths:
       - /admin/login
-      - /admin/users/insert
+      - /admin/signup
       - /app/
 

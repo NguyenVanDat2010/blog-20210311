@@ -139,4 +139,11 @@
       updated_date = #{updatedDate,jdbcType=TIMESTAMP}
     where role_id = #{roleId,jdbcType=BIGINT}
   </update>
+
+  <select id="selectRoleByRoleRight" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from blog_role
+    where role_right = #{roleRight,jdbcType=VARCHAR}
+  </select>
 </mapper>

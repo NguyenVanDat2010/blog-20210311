@@ -61,7 +61,7 @@ DROP TABLE IF EXISTS `blog`.`blog_user`;
 CREATE TABLE `blog`.`blog_user`
 (
     `user_uuid`       varchar(50)  NOT NULL COMMENT 'user unique id, auto increment',
-    `role_id`         int(11) NOT NULL COMMENT 'role id',
+    `role_id`         int(11) NOT NULL DEFAULT '4' COMMENT 'role id',
     `full_name`       varchar(100) NOT NULL COMMENT 'full name of user',
     `email`           varchar(100) NOT NULL COMMENT 'email of user',
     `username`        varchar(50)  NOT NULL COMMENT 'login username',

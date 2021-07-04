@@ -2,6 +2,7 @@ package com.kira.blog.mapper;
 
 import com.kira.blog.pojo.po.UserPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
@@ -20,4 +21,7 @@ public interface UserMapper {
     int updateByPrimaryKey(UserPO record);
 
     UserPO getUserByUsername(String username);
+
+    Integer countUserExists(@Param("email") String email, @Param("username") String username, @Param("phoneNumber") String phoneNumber);
+
 }

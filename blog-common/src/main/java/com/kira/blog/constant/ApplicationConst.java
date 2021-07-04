@@ -25,6 +25,8 @@ public interface ApplicationConst {
 
     String REGEX_USERNAME = "^(?=.{3,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
 
+    String PARAM_GENDER = "male, female, other";
+
     //Resend up to 2 times in an interval of 30 seconds after
     int TIME_INTERVAL_RESEND = 30;
 

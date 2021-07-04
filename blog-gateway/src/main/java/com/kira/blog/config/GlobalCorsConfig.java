@@ -1,4 +1,4 @@
-package com.kira.blog.enums;
+package com.kira.blog.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

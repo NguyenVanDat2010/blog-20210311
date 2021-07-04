@@ -2,6 +2,7 @@ package com.kira.blog.mapper;
 
 import com.kira.blog.pojo.po.RolePO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface RoleMapper {
@@ -16,4 +17,6 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(RolePO record);
 
     int updateByPrimaryKey(RolePO record);
+
+    RolePO selectRoleByRoleRight(@Param("roleRight") String roleRight);
 }
