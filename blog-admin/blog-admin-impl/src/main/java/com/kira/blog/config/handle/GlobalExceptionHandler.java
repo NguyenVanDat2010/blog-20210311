@@ -40,10 +40,9 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseBase<?> exceptionHandler(InvalidInputException e) {
-        logger.error("Invalid message is: {}", e.getMessage());
+        logger.error("InvalidInputException message is: {}", e.getMessage());
         return ResponseUtils.fail(e.getCode(), e.getMessage());
     }
-
 
     /**
      * catch SQLException: sql exception
