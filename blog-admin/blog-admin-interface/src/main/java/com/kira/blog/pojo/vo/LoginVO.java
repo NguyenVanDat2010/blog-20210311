@@ -10,6 +10,8 @@ public class LoginVO {
 
     private String username;
 
+    private String userStatus;
+
     private String roleName;
 
     private String roleRight;

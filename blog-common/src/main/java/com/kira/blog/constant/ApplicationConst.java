@@ -25,6 +25,8 @@ public interface ApplicationConst {
 
     String REGEX_USERNAME = "^(?=.{3,15}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
 
+    String REGEX_BASE64_IMAGE = "data:image\\/(jpg|png|jpeg|bmp);base64,([^\\\"]*)";
+
     String PARAM_GENDER = "male, female, other";
 
     //Resend up to 2 times in an interval of 30 seconds after

@@ -121,6 +121,15 @@ public class LoginServiceImpl implements LoginService {
             }
         }
         LoginVO loginVO = loginMapper.getUserByUsername(username);
+        if (loginVO == null) {
+            throw new BizException(ExceptionEnum.USER_NOT_EXIST);
+        }
+        if ("Suspend".equals(loginVO.getUserStatus())) {
+            throw new BizException(ExceptionEnum.USER_HAVE_NOT_ACTIVE);
+        }
+        if (loginVO.getAccessRights().size() < 1) {
+            throw new BizException(ExceptionEnum.USER_WITH_NO_ROLE);
+        }
         JwtPayload jwtPayload = new JwtPayload();
         BeanUtils.copyProperties(loginVO, jwtPayload);
 

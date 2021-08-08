@@ -6,6 +6,7 @@
         <result column="role_name" property="roleName"/>
         <result column="role_right" property="roleRight"/>
         <result column="role_status" property="roleStatus"/>
+        <result column="user_status" property="userStatus"/>
         <collection property="accessRights" ofType="com.kira.blog.pojo.po.AccessRightPO">
             <result column="module_code" property="moduleCode"/>
             <result column="access_right" property="accessRight"/>
@@ -18,6 +19,7 @@
     <select id="getUserByUsername" resultMap="LoginVOResultMap">
         SELECT
             bu.username,
+            bu.user_status,
             br.role_name,
             br.role_right,
             br.role_status,
@@ -33,7 +35,8 @@
             bu.username = #{username}
           AND br.role_id = bu.role_id
           AND bar.role_id = bu.role_id
-          AND bu.user_status = 'Active'
+--           AND bu.user_status = 'Active'
+--           AND br.role_status = '1'
           AND bm.module_code = bar.module_code
         order by bm.sort ASC
     </select>

@@ -1,6 +1,7 @@
 package com.kira.blog.mapper;
 
 import com.kira.blog.pojo.po.UserPO;
+import com.kira.blog.pojo.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,4 +25,5 @@ public interface UserMapper {
 
     Integer countUserExists(@Param("email") String email, @Param("username") String username, @Param("phoneNumber") String phoneNumber);
 
+    UserVO getUserByUserUuid(@Param("userUuid") String userUuid);
 }

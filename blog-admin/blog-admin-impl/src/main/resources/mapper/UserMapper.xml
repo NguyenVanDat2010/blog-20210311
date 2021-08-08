@@ -335,4 +335,38 @@
       </if>
     </trim>
   </select>
+
+  <select id="getUserByUserUuid" resultType="com.kira.blog.pojo.vo.UserVO">
+    SELECT
+      bu.user_uuid,
+      bu.username,
+      bu.full_name,
+      bu.email,
+      bu.password,
+      bu.birthday,
+      bu.phone_number,
+      bu.gender,
+      bu.user_status,
+      bu.is_edit,
+      bu.is_delete,
+      br.role_name,
+      br.role_right,
+      br.role_status,
+      bar.module_code,
+      bar.access_right,
+      bm.sort
+    FROM
+      blog_user bu,
+      blog_role br,
+      blog_access_right bar,
+      blog_module bm
+    WHERE
+      bu.user_uuid = #{userUuid}
+      AND br.role_id = bu.role_id
+      AND bar.role_id = bu.role_id
+--       AND bu.user_status = 'Active'
+--           AND br.role_status = '1'
+      AND bm.module_code = bar.module_code
+    order by bm.sort ASC limit 1;
+  </select>
 </mapper>
