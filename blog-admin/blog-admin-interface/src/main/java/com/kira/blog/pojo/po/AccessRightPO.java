@@ -10,7 +10,7 @@ import java.util.Date;
 public class AccessRightPO {
     private String moduleCode;
 
-    private Integer roleId;
+//    private Integer roleId;
 
     @ValidParamRange(
             paramRange = RoleConst.ACCESS_RIGHT,

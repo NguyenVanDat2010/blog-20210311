@@ -18,12 +18,12 @@ public class UserController implements UserApi {
     @Resource
     private UserService userService;
 
-    //dang loi regex va get roleRight
+    //dang loi regex
     @Override
-    public ResponseBase updateUser(String userUuid, UpdateUserDTO updateUserDTO) {
+    public ResponseBase updateUser(String userUuid, UpdateUserDTO updateUserDTO, String roleRight) {
         logger.info("UserController, updateUser with userUuid is {}", userUuid);
         updateUserDTO.setUserUuid(userUuid);
-        userService.updateUser(updateUserDTO);
+        userService.updateUser(updateUserDTO, roleRight);
         return ResponseUtils.ok();
     }
 }

@@ -38,8 +38,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.insertSelective(record);
     }
 
+    //check them neu la superAdmin thi se update duoc all status
     @Override
-    public void updateUser(UpdateUserDTO updateUserDTO) {
+    public void updateUser(UpdateUserDTO updateUserDTO, String roleRight) {
         logger.info("UserServiceImpl - updateUser with userUuid is {}", updateUserDTO.getUserUuid());
         UserVO userVO = userMapper.getUserByUserUuid(updateUserDTO.getUserUuid());
         if (userVO == null) {

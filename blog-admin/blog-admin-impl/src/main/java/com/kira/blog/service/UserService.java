@@ -10,5 +10,5 @@ public interface UserService {
 
     int saveUser(UserPO record);
 
-    void updateUser(UpdateUserDTO updateUserDTO);
+    void updateUser(UpdateUserDTO updateUserDTO, String roleRight);
 }

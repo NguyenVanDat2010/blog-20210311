@@ -335,8 +335,30 @@
       </if>
     </trim>
   </select>
+  <resultMap id="UserVOResultMap" type="com.kira.blog.pojo.vo.UserVO">
+    <result column="user_uuid" property="userUuid"/>
+    <result column="username" property="username"/>
+    <result column="full_name" property="fullName"/>
+    <result column="email" property="email"/>
+    <result column="password" property="password"/>
+    <result column="birthday" property="birthday"/>
+    <result column="phone_number" property="phoneNumber"/>
+    <result column="gender" property="gender"/>
+    <result column="user_status" property="userStatus"/>
+    <result column="is_edit" property="isEdit"/>
+    <result column="is_delete" property="isDelete"/>
+    <result column="role_name" property="roleName"/>
+    <result column="role_right" property="roleRight"/>
+    <result column="role_status" property="roleStatus"/>
+    <result column="user_status" property="userStatus"/>
+    <collection property="accessRights" ofType="com.kira.blog.pojo.po.AccessRightPO">
+      <result column="module_code" property="moduleCode"/>
+      <result column="access_right" property="accessRight"/>
+      <result column="sort" property="sort"/>
+    </collection>
+  </resultMap>
 
-  <select id="getUserByUserUuid" resultType="com.kira.blog.pojo.vo.UserVO">
+  <select id="getUserByUserUuid" resultMap="UserVOResultMap">
     SELECT
       bu.user_uuid,
       bu.username,
@@ -367,6 +389,6 @@
 --       AND bu.user_status = 'Active'
 --           AND br.role_status = '1'
       AND bm.module_code = bar.module_code
-    order by bm.sort ASC limit 1;
+    order by bm.sort ASC;
   </select>
 </mapper>
