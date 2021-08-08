@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 @RequestMapping
 public interface LoginApi {
@@ -28,6 +27,6 @@ public interface LoginApi {
 
     @ApiOperation("Logout: User logout")
     @PostMapping("/logout")
-    ResponseBase logout(@RequestHeader("username") @Valid String username, HttpServletRequest request);
+    ResponseBase logout(@RequestHeader("username") @Validated String username, HttpServletRequest request);
 
 }

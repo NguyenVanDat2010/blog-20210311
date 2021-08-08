@@ -1,8 +1,8 @@
 package com.kira.blog.pojo.dto;
 
+import com.kira.blog.annotation.validation.NotBlank;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 
 @Data
 public class LoginDTO {

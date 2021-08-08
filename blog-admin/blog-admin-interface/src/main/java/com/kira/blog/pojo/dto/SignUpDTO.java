@@ -1,23 +1,17 @@
 package com.kira.blog.pojo.dto;
 
 import com.kira.blog.annotation.validation.NotEmpty;
-import com.kira.blog.annotation.validation.NotEmpty;
 import com.kira.blog.annotation.validation.ValidParamRange;
 import com.kira.blog.annotation.validation.ValidRegex;
 import lombok.Data;
 
-import javax.validation.Valid;
-
 import static com.kira.blog.constant.ApplicationConst.*;
 
 @Data
-//@Valid
 public class SignUpDTO {
-    @javax.validation.constraints.NotEmpty(message = "Full name cannot empty")
     @NotEmpty(message = "Full name cannot empty1")
     private String fullName;
 
-    @javax.validation.constraints.NotEmpty(message = "Email cannot empty")
     @ValidRegex(regex = REGEX_EMAIL, message = "Email validate error. Ex: example@gmail.com")
     @NotEmpty(message = "Email cannot empty1")
     private String email;
