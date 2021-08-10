@@ -13,6 +13,7 @@ import com.kira.blog.pojo.po.RolePO;
 import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.LoginVO;
 import com.kira.blog.pojo.vo.SignUpVO;
+import com.kira.blog.pojo.vo.UserVO;
 import com.kira.blog.service.LoginService;
 import com.kira.blog.service.RoleService;
 import com.kira.blog.service.UserService;
@@ -24,6 +25,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -99,13 +101,21 @@ public class LoginServiceImpl implements LoginService {
         logger.info("User: {} login", loginDTO.getUsername());
         String username = loginDTO.getUsername();
 
-        UserPO userPO = userService.getUserByUsername(username);
-        if (null == userPO || "1".equals(userPO.getIsDelete())) {
+//        UserPO userPO = userService.getUserByUsername(username);
+        UserVO userVO = userService.getUserByUserUuidOrUsername(null, username);
+        if (null == userVO || "1".equals(userVO.getIsDelete())) {
             throw new BizException(ExceptionEnum.USER_NOT_EXIST);
         }
 
+        if ("Suspend".equals(userVO.getUserStatus())) {
+            throw new BizException(ExceptionEnum.USER_HAVE_NOT_ACTIVE);
+        }
+        if (userVO.getAccessRights().size() < 1) {
+            throw new BizException(ExceptionEnum.USER_WITH_NO_ROLE);
+        }
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (!encoder.matches(loginDTO.getPassword(), userPO.getPassword())) {
+        if (!encoder.matches(loginDTO.getPassword(), userVO.getPassword())) {
             throw new BizException(ExceptionEnum.USER_WRONG_PASSWORD);
         }
 
@@ -120,16 +130,10 @@ public class LoginServiceImpl implements LoginService {
                 stringRedisTemplate.delete(authInRedis);
             }
         }
-        LoginVO loginVO = loginMapper.getUserByUsername(username);
-        if (loginVO == null) {
-            throw new BizException(ExceptionEnum.USER_NOT_EXIST);
-        }
-        if ("Suspend".equals(loginVO.getUserStatus())) {
-            throw new BizException(ExceptionEnum.USER_HAVE_NOT_ACTIVE);
-        }
-        if (loginVO.getAccessRights().size() < 1) {
-            throw new BizException(ExceptionEnum.USER_WITH_NO_ROLE);
-        }
+//        LoginVO loginVO = loginMapper.getUserByUsername(username);
+        LoginVO loginVO = new LoginVO();
+        BeanUtils.copyProperties(userVO, loginVO);
+
         JwtPayload jwtPayload = new JwtPayload();
         BeanUtils.copyProperties(loginVO, jwtPayload);
 

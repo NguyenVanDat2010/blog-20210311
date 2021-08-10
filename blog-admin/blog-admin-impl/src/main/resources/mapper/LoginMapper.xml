@@ -33,6 +33,7 @@
             blog_module bm
         WHERE
             bu.username = #{username}
+          AND bu.is_delete
           AND br.role_id = bu.role_id
           AND bar.role_id = bu.role_id
 --           AND bu.user_status = 'Active'

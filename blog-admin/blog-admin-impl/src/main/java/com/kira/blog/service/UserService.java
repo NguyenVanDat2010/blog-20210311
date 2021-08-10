@@ -2,6 +2,7 @@ package com.kira.blog.service;
 
 import com.kira.blog.pojo.dto.UpdateUserDTO;
 import com.kira.blog.pojo.po.UserPO;
+import com.kira.blog.pojo.vo.UserVO;
 
 public interface UserService {
     UserPO getUserByUsername(String username);
@@ -11,4 +12,6 @@ public interface UserService {
     int saveUser(UserPO record);
 
     void updateUser(UpdateUserDTO updateUserDTO, String roleRight);
+
+    UserVO getUserByUserUuidOrUsername(String userUuid, String username);
 }

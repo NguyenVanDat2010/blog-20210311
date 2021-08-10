@@ -28,6 +28,7 @@ public enum ExceptionEnum {
     USER_PASSWORD_NOT_EQUAL_CONFIRM_PASSWORD("600006", "User new password and confirm password is not equal."),
     USER_HAD_EXIST_IS_DELETED("600022", "User had existed, Do you want to active it?"),
     USER_HAVE_NOT_ACTIVE("600023", "You haven't activated your account, Pls check your email inbox"),
+    USER_PARAM_IS_NULL("600024","UserUuid and username is null"),
 
     ROLE_NOT_EXIST("600007", "Role not exist."),
     ROLE_IN_EDIT("600008", "Role is in edit."),

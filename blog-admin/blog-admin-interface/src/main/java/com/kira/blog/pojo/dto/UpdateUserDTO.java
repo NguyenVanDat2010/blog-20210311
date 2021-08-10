@@ -1,18 +1,14 @@
 package com.kira.blog.pojo.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.kira.blog.annotation.validation.NotEmpty;
 import com.kira.blog.annotation.validation.ValidParamRange;
 import com.kira.blog.annotation.validation.ValidRegex;
 import lombok.Data;
-
-import javax.validation.Valid;
 
 import static com.kira.blog.constant.ApplicationConst.*;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Valid
 public class UpdateUserDTO {
 
     private String userUuid;

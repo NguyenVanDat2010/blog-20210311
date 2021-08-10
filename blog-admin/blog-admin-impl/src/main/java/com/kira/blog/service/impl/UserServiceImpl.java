@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 
@@ -38,34 +39,44 @@ public class UserServiceImpl implements UserService {
         return userMapper.insertSelective(record);
     }
 
+    @Override
+    public UserVO getUserByUserUuidOrUsername(String userUuid, String username) {
+        logger.info("UserServiceImpl - getUserByUserUuid with userUuid is {} and username is {}", userUuid, username);
+        if (userUuid == null && username == null) {
+            throw new BizException(ExceptionEnum.USER_PARAM_IS_NULL);
+        }
+        return userMapper.getUserByUserUuidOrUsername(userUuid, username);
+    }
+
     //check them neu la superAdmin thi se update duoc all status
     @Override
     public void updateUser(UpdateUserDTO updateUserDTO, String roleRight) {
         logger.info("UserServiceImpl - updateUser with userUuid is {}", updateUserDTO.getUserUuid());
-        UserVO userVO = userMapper.getUserByUserUuid(updateUserDTO.getUserUuid());
-        if (userVO == null) {
+//        UserVO userVO = getUserByUserUuidOrUsername(updateUserDTO.getUserUuid(), null);
+        UserPO userPO = userMapper.selectByPrimaryKey(updateUserDTO.getUserUuid());
+        if (ObjectUtils.isEmpty(userPO)) {
             throw new BizException(ExceptionEnum.USER_NOT_EXIST);
         }
-        if ("Suspend".equals(userVO.getUserStatus())) {
+        if ("Suspend".equals(userPO.getUserStatus())) {
             throw new BizException(ExceptionEnum.USER_HAVE_NOT_ACTIVE);
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (!encoder.matches(updateUserDTO.getOldPassword(), userVO.getPassword())) {
+        if (!encoder.matches(updateUserDTO.getOldPassword(), userPO.getPassword())) {
             throw new BizException(ExceptionEnum.USER_WRONG_PASSWORD);
         }
         if (!updateUserDTO.getNewPassword().equals(updateUserDTO.getConfirmPassword())) {
             throw new BizException(ExceptionEnum.USER_PASSWORD_NOT_EQUAL_CONFIRM_PASSWORD);
         }
-        if (userVO.getAccessRights().size() < 1) {
-            throw new BizException(ExceptionEnum.USER_WITH_NO_ROLE);
-        }
-        UserPO userPO = new UserPO();
-        BeanUtils.copyProperties(userVO, userPO);
-        userPO.setUserUuid(userVO.getUserUuid());
+//        if (userPO.getAccessRights().size() < 1) {
+//            throw new BizException(ExceptionEnum.USER_WITH_NO_ROLE);
+//        }
+//        UserPO userPO = new UserPO();
+//        BeanUtils.copyProperties(userVO, userPO);
+//        userPO.setUserUuid(userVO.getUserUuid());
         BeanUtils.copyProperties(updateUserDTO, userPO);
         userPO.setPassword(encodePassword(updateUserDTO.getNewPassword()));
         userPO.setCfPassword(encodePassword(updateUserDTO.getConfirmPassword()));
-        userPO.setOldPassword(userVO.getPassword());
+        userPO.setOldPassword(userPO.getPassword());
         userPO.setAvatar(updateUserDTO.getAvatar());
 
         userMapper.updateByPrimaryKeySelective(userPO);

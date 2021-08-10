@@ -4,10 +4,10 @@ TRUNCATE TABLE `blog`.`blog_user`;
 TRUNCATE TABLE `blog`.`blog_access_right`;
 
 -- init the super user role and default 4 roles
-INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('Super Admin', 'SAD');
-INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('Maker or checker as Admin', 'MC');
-INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('User', 'UE');
-INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('No need', 'NA');
+INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('Super Admin', 'ROLE_SAD');
+INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('Maker or checker as Admin', 'ROLE_MC');
+INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('User', 'ROLE_USER');
+INSERT INTO `blog`.`blog_role` (`role_name`, `role_right`) VALUES ('No need', 'ROLE_NA');
 
 -- init the blog_module
 INSERT INTO `blog`.`blog_module` (`module_code`, `module_name`, `sort`) VALUES ('ue', 'User events', '1');
@@ -35,17 +35,17 @@ INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`
 INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('mte', '2', 'RW');
 INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('ue', '3', 'NA');
 INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('rae', '3', 'NA');
-INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('pe', '3', 'RW');
-INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cte', '3', 'RW');
-INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cme', '3', 'RW');
-INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('tge', '3', 'RW');
-INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('mte', '3', 'NA');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('pe', '3', 'RO');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cte', '3', 'RO');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cme', '3', 'RO');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('tge', '3', 'RO');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('mte', '3', 'RO');
 INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('ue', '4', 'NA');
 INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('rae', '4', 'NA');
-INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('pe', '4', 'RO');
-INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cte', '4', 'RO');
-INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cme', '4', 'RO');
-INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('tge', '4', 'RO');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('pe', '4', 'NA');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cte', '4', 'NA');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('cme', '4', 'NA');
+INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('tge', '4', 'NA');
 INSERT INTO `blog`.`blog_access_right` (`module_code`, `role_id`, `access_right`) VALUES ('mte', '4', 'NA');
 
 -- init the user //pass: 123456a@  or 123456

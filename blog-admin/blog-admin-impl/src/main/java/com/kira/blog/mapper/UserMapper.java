@@ -25,5 +25,5 @@ public interface UserMapper {
 
     Integer countUserExists(@Param("email") String email, @Param("username") String username, @Param("phoneNumber") String phoneNumber);
 
-    UserVO getUserByUserUuid(@Param("userUuid") String userUuid);
+    UserVO getUserByUserUuidOrUsername(@Param("userUuid") String userUuid, @Param("username") String username);
 }
