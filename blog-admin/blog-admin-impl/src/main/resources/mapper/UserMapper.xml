@@ -200,64 +200,58 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.kira.blog.pojo.po.UserPO">
     update blog_user
     <set>
-      <if test="roleId != null">
+      <if test="roleId != null and roleId != ''">
         role_id = #{roleId,jdbcType=INTEGER},
       </if>
-      <if test="fullName != null">
+      <if test="fullName != null and fullName != ''">
         full_name = #{fullName,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
+      <if test="email != null and email != ''">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
+      <if test="username != null and username != ''">
         username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
+      <if test="password != null and password != ''">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="cfPassword != null">
+      <if test="cfPassword != null and cfPassword != ''">
         cf_password = #{cfPassword,jdbcType=VARCHAR},
       </if>
-      <if test="oldPassword != null">
+      <if test="oldPassword != null and oldPassword != ''">
         old_password = #{oldPassword,jdbcType=VARCHAR},
       </if>
-      <if test="birthday != null">
+      <if test="birthday != null and birthday != ''">
         birthday = #{birthday,jdbcType=VARCHAR},
       </if>
-      <if test="phoneNumber != null">
+      <if test="phoneNumber != null and phoneNumber != ''">
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
+      <if test="gender != null and gender != ''">
         gender = #{gender,jdbcType=VARCHAR},
       </if>
-      <if test="userStatus != null">
+      <if test="userStatus != null and userStatus != ''">
         user_status = #{userStatus,jdbcType=VARCHAR},
       </if>
-      <if test="isEdit != null">
+      <if test="isEdit != null and isEdit != ''">
         is_edit = #{isEdit,jdbcType=CHAR},
       </if>
-      <if test="isDelete != null">
+      <if test="isDelete != null and isDelete != ''">
         is_delete = #{isDelete,jdbcType=CHAR},
       </if>
-      <if test="lastLoginTime != null">
-        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="whenCreated != null">
+<!--      <if test="lastLoginTime != null">-->
+<!--        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+      <if test="whenCreated != null and whenCreated != ''">
         when_created = #{whenCreated,jdbcType=VARCHAR},
       </if>
-      <if test="createdBy != null">
+      <if test="createdBy != null and createdBy != ''">
         created_by = #{createdBy,jdbcType=VARCHAR},
       </if>
-      <if test="createdDate != null">
-        created_date = #{createdDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedBy != null">
+      <if test="updatedBy != null and updatedBy != ''">
         updated_by = #{updatedBy,jdbcType=VARCHAR},
       </if>
-      <if test="updatedDate != null">
-        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="avatar != null">
+      <if test="avatar != null and avatar != ''">
         avatar = #{avatar,jdbcType=LONGVARCHAR},
       </if>
     </set>

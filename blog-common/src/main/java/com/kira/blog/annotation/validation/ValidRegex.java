@@ -44,7 +44,7 @@ public @interface ValidRegex {
 
         @Override
         public boolean isValid(Object obj, ConstraintValidatorContext constraintValidatorContext) {
-            logger.info("ValidRegexValidator, value is: {}", obj.toString());
+            logger.info("ValidRegexValidator, value is: {}", obj);
             if (obj == null || StringUtils.isBlank(obj.toString()) || StringUtils.isBlank(regex)) {
                 return true;
             }

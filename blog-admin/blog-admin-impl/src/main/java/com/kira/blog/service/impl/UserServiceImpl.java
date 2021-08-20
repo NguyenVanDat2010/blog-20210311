@@ -15,6 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -61,25 +66,63 @@ public class UserServiceImpl implements UserService {
             throw new BizException(ExceptionEnum.USER_HAVE_NOT_ACTIVE);
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (!encoder.matches(updateUserDTO.getOldPassword(), userPO.getPassword())) {
-            throw new BizException(ExceptionEnum.USER_WRONG_PASSWORD);
+        if (!ObjectUtils.isEmpty(updateUserDTO.getNewPassword()) || !ObjectUtils.isEmpty(updateUserDTO.getConfirmPassword())) {
+            if (ObjectUtils.isEmpty(updateUserDTO.getOldPassword()) || !encoder.matches(updateUserDTO.getOldPassword(), userPO.getPassword())) {
+                throw new BizException(ExceptionEnum.USER_WRONG_PASSWORD);
+            }
+            if (ObjectUtils.isEmpty(updateUserDTO.getNewPassword()) || !updateUserDTO.getNewPassword().equals(updateUserDTO.getConfirmPassword())) {
+                throw new BizException(ExceptionEnum.USER_PASSWORD_NOT_EQUAL_CONFIRM_PASSWORD);
+            }
+            userPO.setPassword(encodePassword(updateUserDTO.getNewPassword()));
+            userPO.setCfPassword(encodePassword(updateUserDTO.getConfirmPassword()));
+            userPO.setOldPassword(userPO.getPassword());
         }
-        if (!updateUserDTO.getNewPassword().equals(updateUserDTO.getConfirmPassword())) {
-            throw new BizException(ExceptionEnum.USER_PASSWORD_NOT_EQUAL_CONFIRM_PASSWORD);
-        }
-//        if (userPO.getAccessRights().size() < 1) {
-//            throw new BizException(ExceptionEnum.USER_WITH_NO_ROLE);
-//        }
-//        UserPO userPO = new UserPO();
-//        BeanUtils.copyProperties(userVO, userPO);
-//        userPO.setUserUuid(userVO.getUserUuid());
-        BeanUtils.copyProperties(updateUserDTO, userPO);
-        userPO.setPassword(encodePassword(updateUserDTO.getNewPassword()));
-        userPO.setCfPassword(encodePassword(updateUserDTO.getConfirmPassword()));
-        userPO.setOldPassword(userPO.getPassword());
-        userPO.setAvatar(updateUserDTO.getAvatar());
 
+        if (!ObjectUtils.isEmpty(updateUserDTO.getFullName())) {
+            userPO.setFullName(updateUserDTO.getFullName());
+        }
+        if (!ObjectUtils.isEmpty(updateUserDTO.getBirthday())) {
+            userPO.setBirthday(updateUserDTO.getBirthday());
+        }
+        if (!ObjectUtils.isEmpty(updateUserDTO.getPhoneNumber())) {
+            userPO.setPhoneNumber(updateUserDTO.getPhoneNumber());
+        }
+        if (!ObjectUtils.isEmpty(updateUserDTO.getGender())) {
+            userPO.setGender(updateUserDTO.getGender());
+        }
+        if (!ObjectUtils.isEmpty(updateUserDTO.getAvatar())) {
+            userPO.setAvatar(updateUserDTO.getAvatar());
+        }
         userMapper.updateByPrimaryKeySelective(userPO);
+    }
+
+    private boolean isNullOrEmpty(String... strArr) {
+        for (String st : strArr) {
+            if (st == null || st.equals("")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Object setNewObject(Object o) {
+        Object newObject = new Object();
+        Field[] a = o.getClass().getDeclaredFields();
+        Map<String, String> map = new HashMap<>();
+
+        for (Field field : a) {
+            try {
+                field.setAccessible(true);
+                String value = (String) field.get(o);
+                if (!ObjectUtils.isEmpty(value)) {
+                    map.put(field.getName(), value);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            newObject = map;
+        }
+        return newObject;
     }
 
     private String encodePassword(String rawPassword) {

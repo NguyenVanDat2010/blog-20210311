@@ -8,7 +8,7 @@ import lombok.Data;
 import static com.kira.blog.constant.ApplicationConst.*;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdateUserDTO {
 
     private String userUuid;

@@ -80,7 +80,7 @@ public class LoginServiceImpl implements LoginService {
         userPO.setBirthday(signUpDTO.getBirthday());
         userPO.setPhoneNumber(signUpDTO.getPhoneNumber());
         userPO.setGender(signUpDTO.getGender());
-        RolePO rolePO = roleService.selectRoleByRoleRight("NA");
+        RolePO rolePO = roleService.selectRoleByRoleRight("ROLE_NA");
         userPO.setRoleId(rolePO.getRoleId());
         //base64 for image
         userPO.setAvatar(signUpDTO.getAvatar());

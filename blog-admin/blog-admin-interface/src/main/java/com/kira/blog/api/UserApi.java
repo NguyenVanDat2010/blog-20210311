@@ -12,6 +12,6 @@ public interface UserApi {
     @ApiOperation("Update user by Id")
     @PutMapping("{userUuid}")
     ResponseBase updateUser(@PathVariable("userUuid") String userUuid,
-                            @RequestBody UpdateUserDTO updateUserDTO,
+                            @Validated @RequestBody UpdateUserDTO updateUserDTO,
                             @RequestHeader String roleRight);
 }

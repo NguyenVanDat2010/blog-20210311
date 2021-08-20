@@ -25,10 +25,11 @@ public enum ExceptionEnum {
     USER_IS_DELETE("600003", "User is delete."),
     USER_HAD_EXIST("600004", "User had existed. Pls try another username"),
     USER_WRONG_PASSWORD("600005", "User wrong password."),
-    USER_PASSWORD_NOT_EQUAL_CONFIRM_PASSWORD("600006", "User new password and confirm password is not equal."),
+    USER_PASSWORD_NOT_EQUAL_CONFIRM_PASSWORD("600006", "New password and confirm password is not equal."),
     USER_HAD_EXIST_IS_DELETED("600022", "User had existed, Do you want to active it?"),
     USER_HAVE_NOT_ACTIVE("600023", "You haven't activated your account, Pls check your email inbox"),
     USER_PARAM_IS_NULL("600024","UserUuid and username is null"),
+//    USER_PASSWORD_MISMATCH("600025", "Password miss fields"),
 
     ROLE_NOT_EXIST("600007", "Role not exist."),
     ROLE_IN_EDIT("600008", "Role is in edit."),
