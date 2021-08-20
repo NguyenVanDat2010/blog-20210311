@@ -13,6 +13,8 @@ public class JwtPayload {
 
 //    private String deviceId;
 
+    private String userUuid;
+
     private String username;
 
     private String roleRight;

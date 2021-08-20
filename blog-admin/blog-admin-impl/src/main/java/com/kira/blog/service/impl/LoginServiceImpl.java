@@ -135,6 +135,7 @@ public class LoginServiceImpl implements LoginService {
         BeanUtils.copyProperties(userVO, loginVO);
 
         JwtPayload jwtPayload = new JwtPayload();
+        jwtPayload.setUserUuid(userVO.getUserUuid());
         BeanUtils.copyProperties(loginVO, jwtPayload);
 
         String accessToken;
@@ -154,7 +155,7 @@ public class LoginServiceImpl implements LoginService {
         stringRedisTemplate.opsForValue().set(sessionId, JSONObject.toJSONString(tokenMap), jwtProperty.getRefreshExpire(), TimeUnit.MINUTES);
         loginVO.setAccessToken(sessionId);
         stringRedisTemplate.opsForValue().set(username, sessionId, jwtProperty.getRefreshExpire(), TimeUnit.MINUTES);
-
+        loginMapper.updateLoginTime(username);
         return loginVO;
     }
 

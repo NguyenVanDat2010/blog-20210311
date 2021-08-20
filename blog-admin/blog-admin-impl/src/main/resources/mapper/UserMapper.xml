@@ -46,6 +46,14 @@
     delete from blog_user
     where user_uuid = #{userUuid,jdbcType=VARCHAR}
   </delete>
+  <update id="deleteUserByUserUuid" parameterType="java.lang.String">
+    update blog_user
+    <set>
+        is_delete = '1',
+    </set>
+    where user_uuid = #{userUuid,jdbcType=VARCHAR}
+  </update>
+
   <insert id="insert" parameterType="com.kira.blog.pojo.po.UserPO">
     insert into blog_user (user_uuid, role_id, full_name, 
       email, username, password, 

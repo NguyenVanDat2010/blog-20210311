@@ -5,6 +5,8 @@ import com.kira.blog.pojo.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(String userUuid);
@@ -26,4 +28,8 @@ public interface UserMapper {
     Integer countUserExists(@Param("email") String email, @Param("username") String username, @Param("phoneNumber") String phoneNumber);
 
     UserVO getUserByUserUuidOrUsername(@Param("userUuid") String userUuid, @Param("username") String username);
+
+    int deleteUserByUserUuid(@Param("userUuid") String userUuid);
+
+    List<UserVO> getListUsers();
 }

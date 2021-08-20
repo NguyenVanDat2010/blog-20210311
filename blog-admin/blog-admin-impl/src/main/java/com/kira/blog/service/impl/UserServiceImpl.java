@@ -6,29 +6,36 @@ import com.kira.blog.mapper.UserMapper;
 import com.kira.blog.pojo.dto.UpdateUserDTO;
 import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.UserVO;
+import com.kira.blog.service.LoginService;
 import com.kira.blog.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private LoginService loginService;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
     @Override
     public UserPO getUserByUsername(String username) {
+        logger.info("UserServiceImpl - getUserByUsername with username is {}", username);
         return userMapper.getUserByUsername(username);
     }
 
@@ -94,11 +101,27 @@ public class UserServiceImpl implements UserService {
             userPO.setAvatar(updateUserDTO.getAvatar());
         }
         userMapper.updateByPrimaryKeySelective(userPO);
+        logger.info("Update user successfully!");
+    }
+
+    @Override
+    public void deleteUserByUserUuid(String userUuid) {
+        logger.info("UserServiceImpl - deleteUserByUserUuid with userUuid is {}", userUuid);
+        UserPO userPO = userMapper.selectByPrimaryKey(userUuid);
+        loginService.logout(userPO.getUsername(), null);
+        userMapper.deleteUserByUserUuid(userUuid);
+        logger.info("Delete user successfully!");
+    }
+
+    @Override
+    public List<UserVO> getListUsers() {
+        logger.info("UserServiceImpl - getListUsers");
+        return userMapper.getListUsers();
     }
 
     private boolean isNullOrEmpty(String... strArr) {
         for (String st : strArr) {
-            if (st == null || st.equals("")) {
+            if (st == null || "".equals(st)) {
                 return true;
             }
         }

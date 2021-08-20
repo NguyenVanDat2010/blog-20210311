@@ -38,6 +38,4 @@ public class UserVO {
     private String roleStatus;
 
     private List<AccessRightPO> accessRights;
-
-    private String accessToken;
 }

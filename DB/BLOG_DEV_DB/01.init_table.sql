@@ -11,13 +11,13 @@ CREATE TABLE `blog`.`blog_module`
     `module_name`  varchar(100) NOT NULL COMMENT 'module name',
     `sort`         int(11) DEFAULT NULL,
     `created_by`   varchar(50) DEFAULT 'system' COMMENT 'creator',
-    `created_date` datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `created_date` datetime    DEFAULT CURRENT_TIMESTAMP ,
     `updated_by`   varchar(50) DEFAULT 'system' COMMENT 'updator',
     `updated_date` datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`module_id`),
     UNIQUE KEY `module_code_index` (`module_code`),
     UNIQUE KEY `module_name_index` (`module_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT 'Blog module table';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT 'Blog module table';
 
 -- ----------------------------
 -- Table structure for blog_role
@@ -33,10 +33,10 @@ CREATE TABLE `blog`.`blog_role`
     `created_by`   varchar(50)          DEFAULT 'system' COMMENT 'created by',
     `created_date` datetime             DEFAULT CURRENT_TIMESTAMP,
     `updated_by`   varchar(50)          DEFAULT 'system' COMMENT 'update by',
-    `updated_date` datetime             DEFAULT CURRENT_TIMESTAMP,
+    `updated_date` datetime             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`role_id`),
     UNIQUE KEY `user_role_index` (`role_right`,`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT 'Blog role table';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT 'Blog role table';
 
 -- ----------------------------
 -- Table structure for blog_access_right
@@ -48,7 +48,7 @@ CREATE TABLE `blog`.`blog_access_right`
     `role_id`      int(11) NOT NULL COMMENT 'role id',
     `access_right` varchar(2)  NOT NULL DEFAULT 'RO' COMMENT 'access right: NA-No Access; RO-Read Only; RW-Read & Write',
     `created_by`   varchar(50)          DEFAULT 'system' COMMENT 'create by',
-    `created_date` datetime             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `created_date` datetime             DEFAULT CURRENT_TIMESTAMP,
     `updated_by`   varchar(50)          DEFAULT 'system' COMMENT 'update by',
     `updated_date` datetime             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     UNIQUE KEY `right_module_index` (`module_code`,`role_id`)
@@ -80,9 +80,9 @@ CREATE TABLE `blog`.`blog_user`
     `created_by`      varchar(50)           DEFAULT 'system' COMMENT 'creator',
     `created_date`    datetime              DEFAULT CURRENT_TIMESTAMP,
     `updated_by`      varchar(50)           DEFAULT 'system' COMMENT 'update user',
-    `updated_date`    datetime              DEFAULT CURRENT_TIMESTAMP,
+    `updated_date`    datetime              DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`user_uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT 'User table';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT 'User table';
 
 -- ----------------------------
 -- Table structure for blog_post
@@ -105,7 +105,7 @@ CREATE TABLE `blog`.`blog_post`
     `created_by`       varchar(50)           DEFAULT 'system' COMMENT 'created by',
     `created_date`     datetime              DEFAULT CURRENT_TIMESTAMP,
     `updated_by`       varchar(50)           DEFAULT 'system' COMMENT 'update by',
-    `updated_date`     datetime              DEFAULT CURRENT_TIMESTAMP,
+    `updated_date`     datetime              DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`post_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -125,7 +125,7 @@ CREATE TABLE `blog`.`blog_category`
     `created_by`   varchar(50)  DEFAULT 'system' COMMENT 'created by',
     `created_date` datetime     DEFAULT CURRENT_TIMESTAMP,
     `updated_by`   varchar(50)  DEFAULT 'system' COMMENT 'update by',
-    `updated_date` datetime     DEFAULT CURRENT_TIMESTAMP,
+    `updated_date` datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`category_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -142,7 +142,7 @@ CREATE TABLE `blog`.`blog_post_category`
     `created_by`   varchar(50) DEFAULT 'system' COMMENT 'created by',
     `created_date` datetime    DEFAULT CURRENT_TIMESTAMP,
     `updated_by`   varchar(50) DEFAULT 'system' COMMENT 'update by',
-    `updated_date` datetime    DEFAULT CURRENT_TIMESTAMP,
+    `updated_date` datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`post_id`, `category_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -163,7 +163,7 @@ CREATE TABLE `blog`.`blog_tag`
     `created_by`   varchar(50)  DEFAULT 'system' COMMENT 'created by',
     `created_date` datetime     DEFAULT CURRENT_TIMESTAMP,
     `updated_by`   varchar(50)  DEFAULT 'system' COMMENT 'update by',
-    `updated_date` datetime     DEFAULT CURRENT_TIMESTAMP,
+    `updated_date` datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`tag_id`),
     UNIQUE KEY `post_id` (`post_id`)
 ) ENGINE = InnoDB
@@ -184,7 +184,7 @@ CREATE TABLE `blog`.`blog_comment`
     `created_by`     varchar(50)      DEFAULT 'system' COMMENT 'created by',
     `created_date`   datetime         DEFAULT CURRENT_TIMESTAMP,
     `updated_by`     varchar(50)      DEFAULT 'system' COMMENT 'update by',
-    `updated_date`   datetime         DEFAULT CURRENT_TIMESTAMP,
+    `updated_date`   datetime         DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`comment_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -203,7 +203,7 @@ CREATE TABLE `blog`.`blog_meta`
     `created_by`   varchar(50) DEFAULT 'system' COMMENT 'created by',
     `created_date` datetime    DEFAULT CURRENT_TIMESTAMP,
     `updated_by`   varchar(50) DEFAULT 'system' COMMENT 'update by',
-    `updated_date` datetime    DEFAULT CURRENT_TIMESTAMP,
+    `updated_date` datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`meta_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -247,7 +247,7 @@ CREATE TABLE `blog`.`blog_user_event_log`
 --     `created_by`    varchar(100)          DEFAULT 'system' COMMENT 'created by',
 --     `created_date`  datetime              DEFAULT CURRENT_TIMESTAMP,
 --     `updated_by`    varchar(100)          DEFAULT 'system' COMMENT 'update by',
---     `updated_date`  datetime              DEFAULT CURRENT_TIMESTAMP,
+--     `updated_date`  datetime              DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 --     PRIMARY KEY (`id`),
 --     UNIQUE KEY `index_error_code` (`error_code`)
 -- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

@@ -15,6 +15,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import com.kira.blog.utils.JwtUtils;
+import org.springframework.web.servlet.HandlerMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -55,9 +56,10 @@ public class AuthFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        String method = ctx.getRequest().getMethod();
+//        String method = ctx.getRequest().getMethod();
         HttpServletRequest request = ctx.getRequest();
         String requestURI = request.getRequestURI();
+
         return (!isAllowPath(requestURI));
     }
 
@@ -79,9 +81,11 @@ public class AuthFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String authorization = request.getHeader("Authorization");
+//        String userUuid = request.getParameter("userUuid");
+        String username = request.getHeader("username");
         logger.info("authorization is: {}", authorization);
-        if (StringUtils.isBlank(authorization)) {
-            logger.warn("authorization is empty");
+        if (StringUtils.isBlank(authorization) || StringUtils.isBlank(username)) {
+            logger.warn("Authorization or username is empty");
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(403);
             return null;
@@ -98,6 +102,13 @@ public class AuthFilter extends ZuulFilter {
         String refreshToken = jsonObject.get("refreshToken").toString();
         try {
             infoFromToken = JwtUtils.getInfoFromToken(accessToken, this.jwtProperty.getRsaPubKey());
+            if (!infoFromToken.getUsername().equals(username)
+                    && !"ROLE_SAD".equals(infoFromToken.getRoleRight())) {
+                logger.warn("authorization don't have a permission");
+                ctx.setSendZuulResponse(false);
+                ctx.setResponseStatusCode(403);
+                return null;
+            }
             logger.info("token parse result is: {}", infoFromToken);
         } catch (ExpiredJwtException e) {
             logger.info("access token expire");
@@ -125,7 +136,8 @@ public class AuthFilter extends ZuulFilter {
             ctx.setResponseStatusCode(403);
             return null;
         }
-        ctx.addZuulRequestHeader("userUuid", infoFromToken.getUsername());
+        ctx.addZuulRequestHeader("userUuid", infoFromToken.getUserUuid());
+        ctx.addZuulRequestHeader("username", infoFromToken.getUsername());
         ctx.addZuulRequestHeader("roleRight", infoFromToken.getRoleRight());
         ctx.addZuulRequestHeader("roleStatus", infoFromToken.getRoleStatus());
 //        ctx.addZuulRequestHeader("deviceId", infoFromToken.getDeviceId());
