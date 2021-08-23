@@ -75,6 +75,8 @@ public class AuthFilter extends ZuulFilter {
         return flag;
     }
 
+//    private boolean
+
     @Override
     public Object run() throws ZuulException {
         JwtPayload infoFromToken;
@@ -121,6 +123,7 @@ public class AuthFilter extends ZuulFilter {
                 tokenMap.put("refreshToken", newRefreshToken);
                 String newTokenJson = JSONObject.toJSONString(tokenMap);
                 logger.info("redis key is: {}, tokenJson is: {}", authorization, newTokenJson);
+                //Moi lan su dung token, se tu dong reset lai thoi gian session login trong redis
                 this.stringRedisTemplate.opsForValue().set(authorization, newTokenJson, this.jwtProperty.getRefreshExpire().longValue(), TimeUnit.MINUTES);
                 this.stringRedisTemplate.opsForValue().set(infoFromToken.getUsername(), authorization, this.jwtProperty.getRefreshExpire().longValue(), TimeUnit.MINUTES);
             } catch (Exception e1) {

@@ -1,7 +1,9 @@
 package com.kira.blog.service;
 
 import com.kira.blog.pojo.dto.UpdateUserDTO;
+import com.kira.blog.pojo.dto.UserListDTO;
 import com.kira.blog.pojo.po.UserPO;
+import com.kira.blog.pojo.vo.UserManagerVO2;
 import com.kira.blog.pojo.vo.UserVO;
 import com.kira.blog.response.common.Page;
 
@@ -20,8 +22,8 @@ public interface UserService {
 
     void deleteUserByUserUuid(String userUuid);
 
-    List<UserVO> getListUsers();
+//    List<UserVO> getListUsers(UserListDTO userListDTO);
 
-    Page<UserVO> listUsers(String pageNo, String pageSize, String startTime, String endTime);
+    Page<UserManagerVO2> listUsers(String pageNo, String pageSize, String startTime, String endTime);
 
 }

@@ -7,6 +7,7 @@ import com.kira.blog.mapper.UserMapper;
 import com.kira.blog.pojo.dto.UpdateUserDTO;
 import com.kira.blog.pojo.dto.UserListDTO;
 import com.kira.blog.pojo.po.UserPO;
+import com.kira.blog.pojo.vo.UserManagerVO2;
 import com.kira.blog.pojo.vo.UserVO;
 import com.kira.blog.response.common.Page;
 import com.kira.blog.service.LoginService;
@@ -118,14 +119,15 @@ public class UserServiceImpl implements UserService {
         logger.info("Delete user successfully!");
     }
 
-    @Override
-    public List<UserVO> getListUsers() {
-        logger.info("UserServiceImpl - getListUsers");
-        return userMapper.getListUsers();
-    }
+//    @Override
+//    public List<UserVO> getListUsers(UserListDTO userListDTO) {
+//        logger.info("UserServiceImpl - getListUsers");
+//        return userMapper.getListUsers(userListDTO);
+//    }
 
     @Override
-    public Page<UserVO> listUsers(String pageNo, String pageSize, String startTime, String endTime) {
+    public Page<UserManagerVO2> listUsers(String pageNo, String pageSize, String startTime, String endTime) {
+        logger.info("UserServiceImpl - listUsers, pageNo={}, pageSize={}, startTime={}, endTime={}", pageNo, pageSize, startTime, endTime);
         try {
             Long startDay;
             Long endDay;
@@ -143,7 +145,7 @@ public class UserServiceImpl implements UserService {
             if (total == 0) {
                 return new Page<>(GlobalConst.DEFAULT_PAGE_NO, GlobalConst.DEFAULT_PAGE_SIZE, 0, null);
             }
-            List<UserVO> appList = userMapper.listUsers(userListDTO);
+            List<UserManagerVO2> appList = userMapper.getListUsers(userListDTO);
             return new Page<>(userListDTO.getPageNo(), userListDTO.getPageSize(), total, appList);
         } catch (NumberFormatException ex) {
             logger.error("Get list application error, {}", ex.getMessage());

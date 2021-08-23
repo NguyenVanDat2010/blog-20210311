@@ -26,6 +26,54 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.kira.blog.pojo.po.UserPO">
     <result column="avatar" jdbcType="LONGVARCHAR" property="avatar" />
   </resultMap>
+  <resultMap id="UserVOResultMap" type="com.kira.blog.pojo.vo.UserVO">
+    <result column="user_uuid" property="userUuid"/>
+    <result column="role_id" property="roleId"/>
+    <result column="username" property="username"/>
+    <result column="full_name" property="fullName"/>
+    <result column="email" property="email"/>
+    <result column="password" property="password"/>
+    <result column="birthday" property="birthday"/>
+    <result column="phone_number" property="phoneNumber"/>
+    <result column="gender" property="gender"/>
+    <result column="user_status" property="userStatus"/>
+    <result column="is_edit" property="isEdit"/>
+    <result column="is_delete" property="isDelete"/>
+    <result column="role_name" property="roleName"/>
+    <result column="role_right" property="roleRight"/>
+    <result column="role_status" property="roleStatus"/>
+    <result column="user_status" property="userStatus"/>
+    <result column="last_login_time" property="lastLoginTime"/>
+    <result column="when_created" property="whenCreated"/>
+    <result column="created_date" property="createdDate"/>
+    <result column="updated_date" property="updatedDate"/>
+    <collection property="accessRights" ofType="com.kira.blog.pojo.po.AccessRightPO">
+      <result column="module_code" property="moduleCode"/>
+      <result column="access_right" property="accessRight"/>
+      <result column="sort" property="sort"/>
+    </collection>
+  </resultMap>
+  <resultMap id="UserManagerVOResultMap" type="com.kira.blog.pojo.vo.UserManagerVO2">
+    <result column="user_uuid" property="userUuid"/>
+    <result column="role_id" property="roleId"/>
+    <result column="username" property="username"/>
+    <result column="full_name" property="fullName"/>
+    <result column="email" property="email"/>
+    <result column="birthday" property="birthday"/>
+    <result column="phone_number" property="phoneNumber"/>
+    <result column="gender" property="gender"/>
+    <result column="user_status" property="userStatus"/>
+    <result column="is_edit" property="isEdit"/>
+    <result column="is_delete" property="isDelete"/>
+    <result column="role_name" property="roleName"/>
+    <result column="role_right" property="roleRight"/>
+    <result column="role_status" property="roleStatus"/>
+    <result column="user_status" property="userStatus"/>
+    <result column="last_login_time" property="lastLoginTime"/>
+    <result column="when_created" property="whenCreated"/>
+    <result column="created_date" property="createdDate"/>
+    <result column="updated_date" property="updatedDate"/>
+  </resultMap>
   <sql id="Base_Column_List">
     user_uuid, role_id, full_name, email, username, password, cf_password, old_password, 
     birthday, phone_number, gender, user_status, is_edit, is_delete, last_login_time, 
@@ -54,12 +102,21 @@
     where user_uuid = #{userUuid,jdbcType=VARCHAR}
   </update>
 
-  <select id="getListUsers" resultMap="ResultMapWithBLOBs">
+  <select id="getListUsers" resultMap="UserManagerVOResultMap">
     select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from blog_user
+    from blog_user bu
+    WHERE 1=1
+    <if test="startDay != '' and startDay != null">
+      AND
+      UNIX_TIMESTAMP(bu.created_date) &gt;= #{startDay}
+      AND UNIX_TIMESTAMP(bu.created_date) &lt;= #{endDay}
+    </if>
+    order by bu.created_date desc
+    LIMIT #{offset},
+    #{pageSize};
   </select>
 
   <select id="countUsers" resultType="java.lang.Integer">
@@ -106,7 +163,7 @@
       UNIX_TIMESTAMP(bu.created_date) &gt;= #{startDay}
       AND UNIX_TIMESTAMP(bu.created_date) &lt;= #{endDay}
     </if>
-    order by bu.created_date desc
+    order by bu.created_date desc, bm.sort asc
     LIMIT #{offset},
     #{pageSize};
   </select>
@@ -394,32 +451,6 @@
       </if>
     </trim>
   </select>
-  <resultMap id="UserVOResultMap" type="com.kira.blog.pojo.vo.UserVO">
-    <result column="user_uuid" property="userUuid"/>
-    <result column="username" property="username"/>
-    <result column="full_name" property="fullName"/>
-    <result column="email" property="email"/>
-    <result column="password" property="password"/>
-    <result column="birthday" property="birthday"/>
-    <result column="phone_number" property="phoneNumber"/>
-    <result column="gender" property="gender"/>
-    <result column="user_status" property="userStatus"/>
-    <result column="is_edit" property="isEdit"/>
-    <result column="is_delete" property="isDelete"/>
-    <result column="role_name" property="roleName"/>
-    <result column="role_right" property="roleRight"/>
-    <result column="role_status" property="roleStatus"/>
-    <result column="user_status" property="userStatus"/>
-    <result column="last_login_time" property="lastLoginTime"/>
-    <result column="when_created" property="whenCreated"/>
-    <result column="created_date" property="createdDate"/>
-    <result column="updated_date" property="updatedDate"/>
-    <collection property="accessRights" ofType="com.kira.blog.pojo.po.AccessRightPO">
-      <result column="module_code" property="moduleCode"/>
-      <result column="access_right" property="accessRight"/>
-      <result column="sort" property="sort"/>
-    </collection>
-  </resultMap>
 
   <select id="getUserByUserUuidOrUsername" resultMap="UserVOResultMap">
     SELECT

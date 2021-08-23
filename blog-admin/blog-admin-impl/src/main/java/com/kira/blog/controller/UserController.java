@@ -3,6 +3,7 @@ package com.kira.blog.controller;
 import com.kira.blog.api.UserApi;
 import com.kira.blog.pojo.dto.UpdateUserDTO;
 import com.kira.blog.pojo.po.UserPO;
+import com.kira.blog.pojo.vo.UserManagerVO2;
 import com.kira.blog.pojo.vo.UserVO;
 import com.kira.blog.pojo.vo.UserVO1;
 import com.kira.blog.response.ResponseBase;
@@ -49,9 +50,9 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseBase<Page<UserVO>> getListUsers(String pageNo, String pageSize, String startTime, String endTime) {
+    public ResponseBase<Page<UserManagerVO2>> getListUsers(String pageNo, String pageSize, String startTime, String endTime) {
         logger.info("UserController, getListUsers, pageNo={}, pageSize={}, startTime={}, endTime={}", pageNo, pageSize, startTime, endTime);
-        Page<UserVO> result = userService.listUsers(pageNo, pageSize, startTime, endTime);
+        Page<UserManagerVO2> result = userService.listUsers(pageNo, pageSize, startTime, endTime);
         return ResponseUtils.ok(result);
     }
 

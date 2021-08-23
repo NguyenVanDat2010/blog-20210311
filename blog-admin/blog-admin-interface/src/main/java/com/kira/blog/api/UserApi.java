@@ -1,6 +1,7 @@
 package com.kira.blog.api;
 
 import com.kira.blog.pojo.dto.UpdateUserDTO;
+import com.kira.blog.pojo.vo.UserManagerVO2;
 import com.kira.blog.pojo.vo.UserVO;
 import com.kira.blog.pojo.vo.UserVO1;
 import com.kira.blog.response.ResponseBase;
@@ -36,7 +37,7 @@ public interface UserApi {
 
     @ApiOperation("Get list user")
     @GetMapping()
-    ResponseBase<Page<UserVO>> getListUsers(
+    ResponseBase<Page<UserManagerVO2>> getListUsers(
             @RequestParam(value = "pageNo", required = false, defaultValue = "1") String pageNo,
             @RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
             @RequestParam(value = "startTime", required = false, defaultValue = "") String startTime,
