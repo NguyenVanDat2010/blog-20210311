@@ -135,7 +135,6 @@ public class LoginServiceImpl implements LoginService {
         BeanUtils.copyProperties(userVO, loginVO);
 
         JwtPayload jwtPayload = new JwtPayload();
-        jwtPayload.setUserUuid(userVO.getUserUuid());
         BeanUtils.copyProperties(loginVO, jwtPayload);
 
         String accessToken;

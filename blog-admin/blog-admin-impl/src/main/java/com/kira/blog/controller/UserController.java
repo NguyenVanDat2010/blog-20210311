@@ -2,12 +2,16 @@ package com.kira.blog.controller;
 
 import com.kira.blog.api.UserApi;
 import com.kira.blog.pojo.dto.UpdateUserDTO;
+import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.UserVO;
+import com.kira.blog.pojo.vo.UserVO1;
 import com.kira.blog.response.ResponseBase;
 import com.kira.blog.response.ResponseUtils;
+import com.kira.blog.response.common.Page;
 import com.kira.blog.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -36,15 +40,23 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseBase<UserVO> getUserByUserUuid(String userUuid) {
-        logger.info("UserController, getUserByUserUuid with userUuid is {}", userUuid);
-        UserVO userVO = userService.getUserByUserUuidOrUsername(userUuid, null);
-        userVO.setPassword(null);
-        return ResponseUtils.ok(userVO);
+    public ResponseBase<UserVO1> getUserByUsername(String username) {
+        logger.info("UserController, getUserByUserUuid with username is {}", username);
+        UserPO userPO = userService.getUserByUsername(username);
+        UserVO1 userVO1 = new UserVO1();
+        BeanUtils.copyProperties(userPO, userVO1);
+        return ResponseUtils.ok(userVO1);
     }
 
     @Override
-    public ResponseBase<List<UserVO>> getListUsers() {
+    public ResponseBase<Page<UserVO>> getListUsers(String pageNo, String pageSize, String startTime, String endTime) {
+        logger.info("UserController, getListUsers, pageNo={}, pageSize={}, startTime={}, endTime={}", pageNo, pageSize, startTime, endTime);
+        Page<UserVO> result = userService.listUsers(pageNo, pageSize, startTime, endTime);
+        return ResponseUtils.ok(result);
+    }
+
+    @Override
+    public ResponseBase activeUserByUsername(String username) {
         return null;
     }
 

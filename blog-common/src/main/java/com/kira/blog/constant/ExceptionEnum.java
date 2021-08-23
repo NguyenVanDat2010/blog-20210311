@@ -15,6 +15,7 @@ public enum ExceptionEnum {
      * */
     UNKNOWN_FR_ERROR("400001", "Unknown com.kira.blog.exception in FR."),
     UNKNOWN_OCR_ERROR("400002", "Unknown com.kira.blog.exception in OCR."),
+    USER_GET_LIST_WRONG_PARAM("40003", "Request params pageNo or pageSize is wrong format"),
 
     /*
      * 60xxxxxx: ms-admin com.kira.blog.exception

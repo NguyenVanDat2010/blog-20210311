@@ -81,7 +81,6 @@ public class AuthFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String authorization = request.getHeader("Authorization");
-//        String userUuid = request.getParameter("userUuid");
         String username = request.getHeader("username");
         logger.info("authorization is: {}", authorization);
         if (StringUtils.isBlank(authorization) || StringUtils.isBlank(username)) {
@@ -136,7 +135,7 @@ public class AuthFilter extends ZuulFilter {
             ctx.setResponseStatusCode(403);
             return null;
         }
-        ctx.addZuulRequestHeader("userUuid", infoFromToken.getUserUuid());
+//        ctx.addZuulRequestHeader("userUuid", infoFromToken.getUserUuid());
         ctx.addZuulRequestHeader("username", infoFromToken.getUsername());
         ctx.addZuulRequestHeader("roleRight", infoFromToken.getRoleRight());
         ctx.addZuulRequestHeader("roleStatus", infoFromToken.getRoleStatus());

@@ -3,6 +3,7 @@ package com.kira.blog.service;
 import com.kira.blog.pojo.dto.UpdateUserDTO;
 import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.UserVO;
+import com.kira.blog.response.common.Page;
 
 import java.util.List;
 
@@ -20,4 +21,7 @@ public interface UserService {
     void deleteUserByUserUuid(String userUuid);
 
     List<UserVO> getListUsers();
+
+    Page<UserVO> listUsers(String pageNo, String pageSize, String startTime, String endTime);
+
 }

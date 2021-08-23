@@ -3,6 +3,7 @@ package com.kira.blog.pojo.vo;
 import com.kira.blog.pojo.po.AccessRightPO;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -38,4 +39,12 @@ public class UserVO {
     private String roleStatus;
 
     private List<AccessRightPO> accessRights;
+
+    private Date lastLoginTime;
+
+    private String whenCreated;
+
+    private Date createdDate;
+
+    private Date updatedDate;
 }

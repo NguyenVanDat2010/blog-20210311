@@ -1,5 +1,6 @@
 package com.kira.blog.mapper;
 
+import com.kira.blog.pojo.dto.UserListDTO;
 import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,4 +33,8 @@ public interface UserMapper {
     int deleteUserByUserUuid(@Param("userUuid") String userUuid);
 
     List<UserVO> getListUsers();
+
+    List<UserVO> listUsers(UserListDTO userListDTO);
+
+    Integer countUsers(UserListDTO userListDTO);
 }

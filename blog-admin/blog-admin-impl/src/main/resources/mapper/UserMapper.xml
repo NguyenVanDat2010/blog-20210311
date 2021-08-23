@@ -54,6 +54,63 @@
     where user_uuid = #{userUuid,jdbcType=VARCHAR}
   </update>
 
+  <select id="getListUsers" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_user
+  </select>
+
+  <select id="countUsers" resultType="java.lang.Integer">
+    select count(*) from blog_user bu
+    where
+    1 = 1
+    <if test="startDay != '' and startDay != null">
+      AND
+      UNIX_TIMESTAMP(bu.created_date) &gt;= #{startDay}
+      AND UNIX_TIMESTAMP(bu.created_date) &lt;= #{endDay}
+    </if>
+  </select>
+
+  <select id="listUsers" resultMap="UserVOResultMap">
+    SELECT
+    bu.user_uuid,
+    bu.username,
+    bu.full_name,
+    bu.email,
+    bu.password,
+    bu.birthday,
+    bu.phone_number,
+    bu.gender,
+    bu.user_status,
+    bu.is_edit,
+    bu.is_delete,
+    bu.last_login_time,
+    bu.when_created,
+    bu.created_date,
+    bu.updated_date,
+    br.role_name,
+    br.role_right,
+    br.role_status,
+    bar.module_code,
+    bar.access_right,
+    bm.sort
+    FROM
+    blog_user bu inner join blog_role br on br.role_id = bu.role_id
+    inner join blog_access_right bar on bar.role_id = bu.role_id
+    inner join blog_module bm on bm.module_code = bar.module_code
+    WHERE 1=1
+    <if test="startDay != '' and startDay != null">
+      AND
+      UNIX_TIMESTAMP(bu.created_date) &gt;= #{startDay}
+      AND UNIX_TIMESTAMP(bu.created_date) &lt;= #{endDay}
+    </if>
+    order by bu.created_date desc
+    LIMIT #{offset},
+    #{pageSize};
+  </select>
+
   <insert id="insert" parameterType="com.kira.blog.pojo.po.UserPO">
     insert into blog_user (user_uuid, role_id, full_name, 
       email, username, password, 
@@ -353,6 +410,10 @@
     <result column="role_right" property="roleRight"/>
     <result column="role_status" property="roleStatus"/>
     <result column="user_status" property="userStatus"/>
+    <result column="last_login_time" property="lastLoginTime"/>
+    <result column="when_created" property="whenCreated"/>
+    <result column="created_date" property="createdDate"/>
+    <result column="updated_date" property="updatedDate"/>
     <collection property="accessRights" ofType="com.kira.blog.pojo.po.AccessRightPO">
       <result column="module_code" property="moduleCode"/>
       <result column="access_right" property="accessRight"/>

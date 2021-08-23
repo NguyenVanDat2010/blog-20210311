@@ -8,6 +8,8 @@ import java.util.List;
 @Data
 public class LoginVO {
 
+    private String userUuid;
+
     private String username;
 
     private String userStatus;
@@ -18,7 +20,7 @@ public class LoginVO {
 
     private String roleStatus;
 
-    private List<AccessRightPO> accessRights;
+//    private List<AccessRightPO> accessRights;
 
     private String accessToken;
 }

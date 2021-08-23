@@ -1,13 +1,18 @@
 package com.kira.blog.service.impl;
 
 import com.kira.blog.constant.ExceptionEnum;
+import com.kira.blog.constant.GlobalConst;
 import com.kira.blog.exception.BizException;
 import com.kira.blog.mapper.UserMapper;
 import com.kira.blog.pojo.dto.UpdateUserDTO;
+import com.kira.blog.pojo.dto.UserListDTO;
 import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.UserVO;
+import com.kira.blog.response.common.Page;
 import com.kira.blog.service.LoginService;
 import com.kira.blog.service.UserService;
+import com.kira.blog.utils.TimeUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -117,6 +122,33 @@ public class UserServiceImpl implements UserService {
     public List<UserVO> getListUsers() {
         logger.info("UserServiceImpl - getListUsers");
         return userMapper.getListUsers();
+    }
+
+    @Override
+    public Page<UserVO> listUsers(String pageNo, String pageSize, String startTime, String endTime) {
+        try {
+            Long startDay;
+            Long endDay;
+            if (StringUtils.isEmpty(startTime) || StringUtils.isEmpty(endTime)) {
+                startDay = TimeUtil.getTimestamp(false);
+                endDay = TimeUtil.getTimestamp(true);
+            } else {
+                startDay = TimeUtil.month2Timestamp(startTime, "start");
+                endDay = TimeUtil.month2Timestamp(endTime, "end");
+            }
+            int pn = Integer.parseInt(pageNo);
+            int ps = Integer.parseInt(pageSize);
+            UserListDTO userListDTO = new UserListDTO(pn, ps, (pn - 1) * ps, startDay, endDay);
+            Integer total = userMapper.countUsers(userListDTO);
+            if (total == 0) {
+                return new Page<>(GlobalConst.DEFAULT_PAGE_NO, GlobalConst.DEFAULT_PAGE_SIZE, 0, null);
+            }
+            List<UserVO> appList = userMapper.listUsers(userListDTO);
+            return new Page<>(userListDTO.getPageNo(), userListDTO.getPageSize(), total, appList);
+        } catch (NumberFormatException ex) {
+            logger.error("Get list application error, {}", ex.getMessage());
+            throw new BizException(ExceptionEnum.USER_GET_LIST_WRONG_PARAM);
+        }
     }
 
     private boolean isNullOrEmpty(String... strArr) {

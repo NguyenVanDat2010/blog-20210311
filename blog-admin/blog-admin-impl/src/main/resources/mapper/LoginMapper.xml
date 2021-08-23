@@ -7,11 +7,11 @@
         <result column="role_right" property="roleRight"/>
         <result column="role_status" property="roleStatus"/>
         <result column="user_status" property="userStatus"/>
-        <collection property="accessRights" ofType="com.kira.blog.pojo.po.AccessRightPO">
-            <result column="module_code" property="moduleCode"/>
-            <result column="access_right" property="accessRight"/>
-            <result column="sort" property="sort"/>
-        </collection>
+<!--        <collection property="accessRights" ofType="com.kira.blog.pojo.po.AccessRightPO">-->
+<!--            <result column="module_code" property="moduleCode"/>-->
+<!--            <result column="access_right" property="accessRight"/>-->
+<!--            <result column="sort" property="sort"/>-->
+<!--        </collection>-->
     </resultMap>
 
     <update id="updateLoginTime">

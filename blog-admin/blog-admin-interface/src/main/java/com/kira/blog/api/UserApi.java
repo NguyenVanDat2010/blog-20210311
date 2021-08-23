@@ -2,7 +2,9 @@ package com.kira.blog.api;
 
 import com.kira.blog.pojo.dto.UpdateUserDTO;
 import com.kira.blog.pojo.vo.UserVO;
+import com.kira.blog.pojo.vo.UserVO1;
 import com.kira.blog.response.ResponseBase;
+import com.kira.blog.response.common.Page;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +31,19 @@ public interface UserApi {
     ResponseBase deleteUser(@RequestParam("userUuid") String userUuid);
 
     @ApiOperation("Get user by userUuid")
-    @GetMapping("{userUuid}")
-    ResponseBase<UserVO> getUserByUserUuid(@PathVariable("userUuid") String userUuid);
+    @GetMapping("{get-user}")
+    ResponseBase<UserVO1> getUserByUsername(@RequestHeader("username") String username);
 
     @ApiOperation("Get list user")
     @GetMapping()
-    ResponseBase<List<UserVO>> getListUsers();
+    ResponseBase<Page<UserVO>> getListUsers(
+            @RequestParam(value = "pageNo", required = false, defaultValue = "1") String pageNo,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
+            @RequestParam(value = "startTime", required = false, defaultValue = "") String startTime,
+            @RequestParam(value = "endTime", required = false, defaultValue = "") String endTime
+    );
+
+    @ApiOperation("Active user")
+    @PutMapping("active")
+    ResponseBase activeUserByUsername(@RequestHeader("username") String username);
 }
