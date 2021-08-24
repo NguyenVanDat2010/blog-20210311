@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class LoginVO {
 
-    private String userUuid;
+//    private String userUuid;
 
     private String username;
 

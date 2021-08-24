@@ -59,7 +59,6 @@ public class AuthFilter extends ZuulFilter {
 //        String method = ctx.getRequest().getMethod();
         HttpServletRequest request = ctx.getRequest();
         String requestURI = request.getRequestURI();
-
         return (!isAllowPath(requestURI));
     }
 
@@ -74,8 +73,6 @@ public class AuthFilter extends ZuulFilter {
         logger.info("request uri is: {}, need auth filter result is: {}", requestURI, Boolean.valueOf(flag));
         return flag;
     }
-
-//    private boolean
 
     @Override
     public Object run() throws ZuulException {

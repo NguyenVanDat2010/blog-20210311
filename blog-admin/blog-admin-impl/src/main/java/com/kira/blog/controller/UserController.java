@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+/**
+ * @author datnv33
+ */
 @RestController
 public class UserController implements UserApi {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
