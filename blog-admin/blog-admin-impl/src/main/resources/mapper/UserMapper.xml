@@ -3,7 +3,7 @@
 <mapper namespace="com.kira.blog.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.kira.blog.pojo.po.UserPO">
     <id column="user_uuid" jdbcType="VARCHAR" property="userUuid" />
-    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="br.role_id" jdbcType="BIGINT" property="roleId" />
     <result column="full_name" jdbcType="VARCHAR" property="fullName" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="username" jdbcType="VARCHAR" property="username" />
@@ -25,6 +25,7 @@
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.kira.blog.pojo.po.UserPO">
     <result column="avatar" jdbcType="LONGVARCHAR" property="avatar" />
+    <result column="role_right" property="roleRight"/>
   </resultMap>
   <resultMap id="UserVOResultMap" type="com.kira.blog.pojo.vo.UserVO">
     <result column="user_uuid" property="userUuid"/>
@@ -75,20 +76,20 @@
     <result column="updated_date" property="updatedDate"/>
   </resultMap>
   <sql id="Base_Column_List">
-    user_uuid, role_id, full_name, email, username, password, cf_password, old_password, 
-    birthday, phone_number, gender, user_status, is_edit, is_delete, last_login_time, 
-    when_created, created_by, created_date, updated_by, updated_date
+    bu.user_uuid, br.role_id, bu.full_name, bu.email, bu.username, bu.password, bu.cf_password, bu.old_password,
+    bu.birthday, bu.phone_number, bu.gender, bu.user_status, bu.is_edit, bu.is_delete, bu.last_login_time,
+    bu.when_created, bu.created_by, bu.created_date, bu.updated_by, bu.updated_date, bu.avatar, br.role_right
   </sql>
   <sql id="Blob_Column_List">
-    avatar
+    bu.user_uuid, bu.role_id, bu.full_name, bu.email, bu.username, bu.password, bu.cf_password, bu.old_password,
+    bu.birthday, bu.phone_number, bu.gender, bu.user_status, bu.is_edit, bu.is_delete, bu.last_login_time,
+    bu.when_created, bu.created_by, bu.created_date, bu.updated_by, bu.updated_date, bu.avatar
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
-    <include refid="Base_Column_List" />
-    ,
     <include refid="Blob_Column_List" />
-    from blog_user
-    where user_uuid = #{userUuid,jdbcType=VARCHAR}
+    from blog_user bu
+    where user_uuid = #{bu.userUuid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from blog_user
@@ -104,8 +105,6 @@
 
   <select id="getListUsers" resultMap="UserManagerVOResultMap">
     select
-    <include refid="Base_Column_List" />
-    ,
     <include refid="Blob_Column_List" />
     from blog_user bu
     WHERE 1=1
@@ -430,9 +429,7 @@
   <select id="getUserByUsername" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from blog_user
+    from blog_user bu inner join blog_role br on bu.role_id=br.role_id
     where username = #{username,jdbcType=VARCHAR}
   </select>
 

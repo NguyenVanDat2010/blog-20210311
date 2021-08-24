@@ -53,17 +53,30 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    private final static String saveUserKey = "uc:create:";
+
     @Override
     public SignUpVO signUp(SignUpDTO signUpDTO) {
         logger.info("User sign-up with username is {}", signUpDTO.getUsername());
+        // 0. add redis key to make sure only one user can be create by username at the same time
+        String username = signUpDTO.getUsername();
+        Boolean succ = stringRedisTemplate.opsForValue().setIfAbsent(saveUserKey + username, username, 1, TimeUnit.SECONDS);
+        if (succ != null && !succ) {
+            throw new BizException(ExceptionEnum.DUPLICATE_OPERATION);
+        }
+
+        // 2. query db if the username had been existed.
         UserPO userPO;
         int countUserExists = userService.countUserExists(signUpDTO.getEmail(), signUpDTO.getUsername(), signUpDTO.getPhoneNumber());
         if (countUserExists > 0) {
             userPO = userService.getUserByUsername(signUpDTO.getUsername());
-            if ("0".equals(userPO.getIsDelete())) {
-                throw new BizException(ExceptionEnum.USER_HAD_EXIST_IS_DELETED);
+            if (userPO != null) {
+                if ("0".equals(userPO.getIsDelete())) {
+                    throw new BizException(ExceptionEnum.USER_HAD_EXIST_IS_DELETED);
+                }
+                throw new BizException(ExceptionEnum.USER_USERNAME_NUMBER_HAD_EXIST);
             }
-            throw new BizException(ExceptionEnum.USER_HAD_EXIST);
+            throw new BizException(ExceptionEnum.USER_EMAIL_PHONE_NUMBER_HAD_EXIST);
         }
 
         if (!signUpDTO.getPassword().equals(signUpDTO.getConfirmPassword())) {
@@ -135,7 +148,7 @@ public class LoginServiceImpl implements LoginService {
         BeanUtils.copyProperties(userVO, loginVO);
 
         JwtPayload jwtPayload = new JwtPayload();
-        BeanUtils.copyProperties(loginVO, jwtPayload);
+        BeanUtils.copyProperties(userVO, jwtPayload);
 
         String accessToken;
         String refreshToken;

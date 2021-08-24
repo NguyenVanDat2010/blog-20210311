@@ -48,5 +48,5 @@ blog:
     allowPaths:
       - /admin/login
       - /admin/signup
-      - /app/
+#      - /app/
 

@@ -10,6 +10,8 @@ public class UserPO {
 
     private Long roleId;
 
+    private String roleRight;
+
     private String fullName;
 
     private String email;

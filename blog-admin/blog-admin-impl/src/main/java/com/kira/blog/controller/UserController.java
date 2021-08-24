@@ -26,10 +26,10 @@ public class UserController implements UserApi {
     private UserService userService;
 
     @Override
-    public ResponseBase updateUser(String userUuid, UpdateUserDTO updateUserDTO, String roleRight) {
+    public ResponseBase updateUser(String userUuid, UpdateUserDTO updateUserDTO) {
         logger.info("UserController, updateUser with userUuid is {}", userUuid);
         updateUserDTO.setUserUuid(userUuid);
-        userService.updateUser(updateUserDTO, roleRight);
+        userService.updateUser(updateUserDTO);
         return ResponseUtils.ok();
     }
 
@@ -50,9 +50,9 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseBase<Page<UserManagerVO2>> getListUsers(String pageNo, String pageSize, String startTime, String endTime) {
-        logger.info("UserController, getListUsers, pageNo={}, pageSize={}, startTime={}, endTime={}", pageNo, pageSize, startTime, endTime);
-        Page<UserManagerVO2> result = userService.listUsers(pageNo, pageSize, startTime, endTime);
+    public ResponseBase<Page<UserManagerVO2>> getListUsers(String roleRight, String pageNo, String pageSize, String startTime, String endTime) {
+        logger.info("UserController, getListUsers, roleRight={}, pageNo={}, pageSize={}, startTime={}, endTime={}", roleRight, pageNo, pageSize, startTime, endTime);
+        Page<UserManagerVO2> result = userService.listUsers(roleRight, pageNo, pageSize, startTime, endTime);
         return ResponseUtils.ok(result);
     }
 

@@ -12,6 +12,7 @@ import com.kira.blog.pojo.vo.UserVO;
 import com.kira.blog.response.common.Page;
 import com.kira.blog.service.LoginService;
 import com.kira.blog.service.UserService;
+import com.kira.blog.utils.RoleValidateUtil;
 import com.kira.blog.utils.TimeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -68,9 +69,8 @@ public class UserServiceImpl implements UserService {
 
     //check them neu la superAdmin thi se update duoc all status
     @Override
-    public void updateUser(UpdateUserDTO updateUserDTO, String roleRight) {
+    public void updateUser(UpdateUserDTO updateUserDTO) {
         logger.info("UserServiceImpl - updateUser with userUuid is {}", updateUserDTO.getUserUuid());
-//        UserVO userVO = getUserByUserUuidOrUsername(updateUserDTO.getUserUuid(), null);
         UserPO userPO = userMapper.selectByPrimaryKey(updateUserDTO.getUserUuid());
         if (ObjectUtils.isEmpty(userPO)) {
             throw new BizException(ExceptionEnum.USER_NOT_EXIST);
@@ -126,9 +126,14 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public Page<UserManagerVO2> listUsers(String pageNo, String pageSize, String startTime, String endTime) {
+    public Page<UserManagerVO2> listUsers(String roleRight, String pageNo, String pageSize, String startTime, String endTime) {
         logger.info("UserServiceImpl - listUsers, pageNo={}, pageSize={}, startTime={}, endTime={}", pageNo, pageSize, startTime, endTime);
         try {
+            // 1. compare roleRight if need to do the maker-checker flow.
+            boolean withCheck = RoleValidateUtil.roleNeedCheck(roleRight);
+            if (!withCheck){
+                throw new BizException(ExceptionEnum.USER_HAVE_NO_PERMISSION);
+            }
             Long startDay;
             Long endDay;
             if (StringUtils.isEmpty(startTime) || StringUtils.isEmpty(endTime)) {

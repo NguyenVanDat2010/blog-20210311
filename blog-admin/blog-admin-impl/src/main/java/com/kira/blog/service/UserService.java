@@ -16,7 +16,7 @@ public interface UserService {
 
     int saveUser(UserPO record);
 
-    void updateUser(UpdateUserDTO updateUserDTO, String roleRight);
+    void updateUser(UpdateUserDTO updateUserDTO);
 
     UserVO getUserByUserUuidOrUsername(String userUuid, String username);
 
@@ -24,6 +24,6 @@ public interface UserService {
 
 //    List<UserVO> getListUsers(UserListDTO userListDTO);
 
-    Page<UserManagerVO2> listUsers(String pageNo, String pageSize, String startTime, String endTime);
+    Page<UserManagerVO2> listUsers(String roleRight, String pageNo, String pageSize, String startTime, String endTime);
 
 }

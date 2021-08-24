@@ -83,10 +83,9 @@ public class AuthFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String authorization = request.getHeader("Authorization");
-        String username = request.getHeader("username");
         logger.info("authorization is: {}", authorization);
-        if (StringUtils.isBlank(authorization) || StringUtils.isBlank(username)) {
-            logger.warn("Authorization or username is empty");
+        if (StringUtils.isBlank(authorization)) {
+            logger.warn("Authorization is empty");
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(403);
             return null;
@@ -103,13 +102,6 @@ public class AuthFilter extends ZuulFilter {
         String refreshToken = jsonObject.get("refreshToken").toString();
         try {
             infoFromToken = JwtUtils.getInfoFromToken(accessToken, this.jwtProperty.getRsaPubKey());
-            if (!infoFromToken.getUsername().equals(username)
-                    && !"ROLE_SAD".equals(infoFromToken.getRoleRight())) {
-                logger.warn("authorization don't have a permission");
-                ctx.setSendZuulResponse(false);
-                ctx.setResponseStatusCode(403);
-                return null;
-            }
             logger.info("token parse result is: {}", infoFromToken);
         } catch (ExpiredJwtException e) {
             logger.info("access token expire");
@@ -138,11 +130,12 @@ public class AuthFilter extends ZuulFilter {
             ctx.setResponseStatusCode(403);
             return null;
         }
-//        ctx.addZuulRequestHeader("userUuid", infoFromToken.getUserUuid());
+        //Set header cho request ben admin va app voi headers la username, roleRight, roleStatus
+        ctx.addZuulRequestHeader("userUuid", infoFromToken.getUserUuid());
         ctx.addZuulRequestHeader("username", infoFromToken.getUsername());
         ctx.addZuulRequestHeader("roleRight", infoFromToken.getRoleRight());
         ctx.addZuulRequestHeader("roleStatus", infoFromToken.getRoleStatus());
-//        ctx.addZuulRequestHeader("deviceId", infoFromToken.getDeviceId());
+        //ctx.addZuulRequestHeader("deviceId", infoFromToken.getDeviceId());
         return null;
     }
 }

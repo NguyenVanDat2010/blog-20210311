@@ -12,13 +12,13 @@ public class LoginVO {
 
     private String username;
 
-    private String userStatus;
+//    private String userStatus;
 
-    private String roleName;
-
-    private String roleRight;
-
-    private String roleStatus;
+//    private String roleName;
+//
+//    private String roleRight;
+//
+//    private String roleStatus;
 
 //    private List<AccessRightPO> accessRights;
 

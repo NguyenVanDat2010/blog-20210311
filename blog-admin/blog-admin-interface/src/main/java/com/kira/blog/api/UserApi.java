@@ -22,14 +22,13 @@ public interface UserApi {
      */
 
     @ApiOperation("Update user by Id")
-    @PutMapping()
-    ResponseBase updateUser(@RequestParam("userUuid") String userUuid,
-                            @Validated @RequestBody UpdateUserDTO updateUserDTO,
-                            @RequestHeader String roleRight);
+    @PutMapping("update-user")
+    ResponseBase updateUser(@RequestHeader("userUuid") String userUuid,
+                            @Validated @RequestBody UpdateUserDTO updateUserDTO);
 
     @ApiOperation("Delete user by Id")
-    @DeleteMapping()
-    ResponseBase deleteUser(@RequestParam("userUuid") String userUuid);
+    @DeleteMapping("delete-user")
+    ResponseBase deleteUser(@RequestHeader("userUuid") String userUuid);
 
     @ApiOperation("Get user by userUuid")
     @GetMapping("{get-user}")
@@ -38,6 +37,7 @@ public interface UserApi {
     @ApiOperation("Get list user")
     @GetMapping()
     ResponseBase<Page<UserManagerVO2>> getListUsers(
+            @RequestHeader("roleRight") String roleRight,
             @RequestParam(value = "pageNo", required = false, defaultValue = "1") String pageNo,
             @RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
             @RequestParam(value = "startTime", required = false, defaultValue = "") String startTime,
