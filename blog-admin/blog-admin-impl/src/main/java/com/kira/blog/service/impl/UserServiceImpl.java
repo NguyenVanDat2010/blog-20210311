@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer countUserExists(String email, String username, String phoneNumber) {
+    public int countUserExists(String email, String username, String phoneNumber) {
         logger.info("UserServiceImpl - countUserExists by email-{}, username-{}, phone number-{}", email, username, phoneNumber);
         return userMapper.countUserExists(email, username, phoneNumber);
     }
@@ -149,6 +149,7 @@ public class UserServiceImpl implements UserService {
                 return new Page<>(GlobalConst.DEFAULT_PAGE_NO, GlobalConst.DEFAULT_PAGE_SIZE, 0, null);
             }
             List<UserManagerVO2> appList = userMapper.getListUsers(userListDTO);
+            logger.info("UserServiceImpl - Get list user successfully!");
             return new Page<>(userListDTO.getPageNo(), userListDTO.getPageSize(), total, appList);
         } catch (NumberFormatException ex) {
             logger.error("Get list application error, {}", ex.getMessage());
@@ -156,34 +157,34 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private boolean isNullOrEmpty(String... strArr) {
-        for (String st : strArr) {
-            if (st == null || "".equals(st)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Object setNewObject(Object o) {
-        Object newObject = new Object();
-        Field[] a = o.getClass().getDeclaredFields();
-        Map<String, String> map = new HashMap<>();
-
-        for (Field field : a) {
-            try {
-                field.setAccessible(true);
-                String value = (String) field.get(o);
-                if (!ObjectUtils.isEmpty(value)) {
-                    map.put(field.getName(), value);
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            newObject = map;
-        }
-        return newObject;
-    }
+//    private boolean isNullOrEmpty(String... strArr) {
+//        for (String st : strArr) {
+//            if (st == null || "".equals(st)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    private Object setNewObject(Object o) {
+//        Object newObject = new Object();
+//        Field[] a = o.getClass().getDeclaredFields();
+//        Map<String, String> map = new HashMap<>();
+//
+//        for (Field field : a) {
+//            try {
+//                field.setAccessible(true);
+//                String value = (String) field.get(o);
+//                if (!ObjectUtils.isEmpty(value)) {
+//                    map.put(field.getName(), value);
+//                }
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//            newObject = map;
+//        }
+//        return newObject;
+//    }
 
     private String encodePassword(String rawPassword) {
         return new BCryptPasswordEncoder().encode(rawPassword);

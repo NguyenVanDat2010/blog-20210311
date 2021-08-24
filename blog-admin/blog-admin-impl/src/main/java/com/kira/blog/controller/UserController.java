@@ -57,10 +57,4 @@ public class UserController implements UserApi {
         return ResponseUtils.ok(result);
     }
 
-    @Override
-    public ResponseBase activeUserByUsername(String username) {
-        return null;
-    }
-
-
 }

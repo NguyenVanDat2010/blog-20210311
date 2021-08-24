@@ -11,4 +11,6 @@ public interface LoginMapper {
 
     void updateLoginTime(@Param("username") String username);
 
+    int activeUserByUsername(@Param("username") String username);
+
 }

@@ -33,7 +33,7 @@ public enum ExceptionEnum {
     //USER_PASSWORD_MISMATCH("600025", "Password miss fields"),
     USER_HAVE_NO_PERMISSION("600025", "User have no permission for this function"),
     USER_EMAIL_PHONE_NUMBER_HAD_EXIST("600026", "Email or phone number had existed, Pls try another email or phone number!"),
-    USER_USERNAME_NUMBER_HAD_EXIST("600026", "Username had existed, Pls try another username!"),
+    USER_USERNAME_NUMBER_HAD_EXIST("600027", "Username had existed, Pls try another username!"),
 
 
     ROLE_NOT_EXIST("600007", "Role not exist."),

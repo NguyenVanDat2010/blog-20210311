@@ -48,4 +48,11 @@ public class LoginController implements LoginApi {
         loginService.logout(username, remoteAddress);
         return ResponseUtils.ok();
     }
+
+    @Override
+    public ResponseBase activeUserByUsername(String username) {
+        logger.info("LoginController, activeUserByUsername with username-{}", username);
+        loginService.activeUser(username);
+        return ResponseUtils.ok();
+    }
 }

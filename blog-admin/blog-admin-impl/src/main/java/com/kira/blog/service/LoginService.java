@@ -12,4 +12,6 @@ public interface LoginService {
     LoginVO login(LoginDTO loginDTO);
 
     void logout(String username, String remoteAddress);
+
+    void activeUser(String username);
 }

@@ -57,7 +57,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public SignUpVO signUp(SignUpDTO signUpDTO) {
-        logger.info("User sign-up with username is {}", signUpDTO.getUsername());
+        logger.info("LoginServiceImpl sign-up with username is {}", signUpDTO.getUsername());
         // 0. add redis key to make sure only one user can be create by username at the same time
         String username = signUpDTO.getUsername();
         Boolean succ = stringRedisTemplate.opsForValue().setIfAbsent(saveUserKey + username, username, 1, TimeUnit.SECONDS);
@@ -101,7 +101,7 @@ public class LoginServiceImpl implements LoginService {
 
         SignUpVO signUpVO = new SignUpVO();
         signUpVO.setUsername(signUpDTO.getUsername());
-        signUpVO.setMessage("Sign-up successfully, pls check your email to active your account. Thanks!");
+        signUpVO.setMessage("LoginServiceImpl, Sign-up successfully, pls check your email to active your account. Thanks!");
         return signUpVO;
     }
 
@@ -111,7 +111,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public LoginVO login(LoginDTO loginDTO) {
-        logger.info("User: {} login", loginDTO.getUsername());
+        logger.info("LoginServiceImpl - User: {} login", loginDTO.getUsername());
         String username = loginDTO.getUsername();
 
 //        UserPO userPO = userService.getUserByUsername(username);
@@ -156,7 +156,7 @@ public class LoginServiceImpl implements LoginService {
             accessToken = JwtUtils.generateToken(jwtPayload, jwtProperty.getRsaPriKey(), jwtProperty.getExpire());
             refreshToken = JwtUtils.generateToken(jwtPayload, jwtProperty.getRsaPriKey(), jwtProperty.getRefreshExpire());
         } catch (Exception e) {
-            logger.error("fail to generate token, cause: {}", e.getMessage());
+            logger.error("LoginServiceImpl - fail to generate token, cause: {}", e.getMessage());
             throw new BizException(ExceptionEnum.TOKEN_GENERATED_ERROR);
         }
 
@@ -168,11 +168,13 @@ public class LoginServiceImpl implements LoginService {
         loginVO.setAccessToken(sessionId);
         stringRedisTemplate.opsForValue().set(username, sessionId, jwtProperty.getRefreshExpire(), TimeUnit.MINUTES);
         loginMapper.updateLoginTime(username);
+        logger.info("LoginServiceImpl, login successfully with username-{}", username);
         return loginVO;
     }
 
     @Override
     public void logout(String username, String remoteAddress) {
+        logger.info("LoginServiceImpl - User: {} logout", username);
         String sessionId = stringRedisTemplate.opsForValue().get(username);
         if (!StringUtils.isEmpty(sessionId)) {
             stringRedisTemplate.delete(sessionId);
@@ -180,5 +182,13 @@ public class LoginServiceImpl implements LoginService {
         stringRedisTemplate.delete(username);
     }
 
-
+    @Override
+    public void activeUser(String username) {
+        logger.info("LoginServiceImpl, activeUser - User: {}", username);
+        if (!StringUtils.isEmpty(username)) {
+            loginMapper.activeUserByUsername(username);
+            return;
+        }
+        throw new BizException(ExceptionEnum.VALIDATE_ERROR);
+    }
 }

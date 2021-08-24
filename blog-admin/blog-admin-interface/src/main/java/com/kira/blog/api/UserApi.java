@@ -41,7 +41,4 @@ public interface UserApi {
             @RequestParam(value = "endTime", required = false, defaultValue = "") String endTime
     );
 
-    @ApiOperation("Active user")
-    @PutMapping("active")
-    ResponseBase activeUserByUsername(@RequestHeader("username") String username);
 }

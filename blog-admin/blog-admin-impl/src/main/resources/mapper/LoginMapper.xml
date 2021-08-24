@@ -45,4 +45,12 @@
         order by bm.sort ASC
     </select>
 
+    <update id="activeUserByUsername" parameterType="java.lang.String">
+        update blog_user
+        <set>
+            user_status = 'Active',
+        </set>
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+
 </mapper>

@@ -7,10 +7,7 @@ import com.kira.blog.pojo.vo.SignUpVO;
 import com.kira.blog.response.ResponseBase;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +24,10 @@ public interface LoginApi {
 
     @ApiOperation("Logout: User logout")
     @PostMapping("/logout")
-    ResponseBase logout(@RequestHeader("username") @Validated String username, HttpServletRequest request);
+    ResponseBase logout(@RequestHeader("username") String username, HttpServletRequest request);
+
+    @ApiOperation("Active user")
+    @PutMapping("active-user")
+    ResponseBase activeUserByUsername(@Validated @RequestParam("username") String username);
 
 }

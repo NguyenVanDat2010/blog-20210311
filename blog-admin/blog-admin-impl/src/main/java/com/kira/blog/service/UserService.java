@@ -10,7 +10,7 @@ import com.kira.blog.response.common.Page;
 public interface UserService {
     UserPO getUserByUsername(String username);
 
-    Integer countUserExists(String email, String username, String phoneNumber);
+    int countUserExists(String email, String username, String phoneNumber);
 
     int saveUser(UserPO record);
 
