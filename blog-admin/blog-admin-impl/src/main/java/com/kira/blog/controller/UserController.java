@@ -4,7 +4,6 @@ import com.kira.blog.api.UserApi;
 import com.kira.blog.pojo.dto.UpdateUserDTO;
 import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.UserManagerVO2;
-import com.kira.blog.pojo.vo.UserVO;
 import com.kira.blog.pojo.vo.UserVO1;
 import com.kira.blog.response.ResponseBase;
 import com.kira.blog.response.ResponseUtils;
@@ -16,7 +15,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 public class UserController implements UserApi {

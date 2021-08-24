@@ -1,13 +1,11 @@
 package com.kira.blog.service;
 
 import com.kira.blog.pojo.dto.UpdateUserDTO;
-import com.kira.blog.pojo.dto.UserListDTO;
 import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.UserManagerVO2;
 import com.kira.blog.pojo.vo.UserVO;
 import com.kira.blog.response.common.Page;
 
-import java.util.List;
 
 public interface UserService {
     UserPO getUserByUsername(String username);

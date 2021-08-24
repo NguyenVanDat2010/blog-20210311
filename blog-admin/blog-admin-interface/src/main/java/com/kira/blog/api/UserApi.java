@@ -2,15 +2,12 @@ package com.kira.blog.api;
 
 import com.kira.blog.pojo.dto.UpdateUserDTO;
 import com.kira.blog.pojo.vo.UserManagerVO2;
-import com.kira.blog.pojo.vo.UserVO;
 import com.kira.blog.pojo.vo.UserVO1;
 import com.kira.blog.response.ResponseBase;
 import com.kira.blog.response.common.Page;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequestMapping("/users")
 public interface UserApi {

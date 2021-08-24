@@ -17,8 +17,6 @@ import com.kira.blog.utils.TimeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -27,6 +25,9 @@ import javax.annotation.Resource;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * @author datnv33
+ */
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -36,9 +37,6 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private LoginService loginService;
-
-    @Resource
-    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public UserPO getUserByUsername(String username) {
