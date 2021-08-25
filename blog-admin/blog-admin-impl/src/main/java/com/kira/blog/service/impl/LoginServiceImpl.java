@@ -3,6 +3,8 @@ package com.kira.blog.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.kira.blog.config.JwtProperty;
 import com.kira.blog.constant.ExceptionEnum;
+import com.kira.blog.constant.RoleConst;
+import com.kira.blog.constant.UserConst;
 import com.kira.blog.domain.JwtPayload;
 import com.kira.blog.exception.BizException;
 import com.kira.blog.mapper.LoginMapper;
@@ -71,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
         if (countUserExists > 0) {
             userPO = userService.getUserByUsername(signUpDTO.getUsername());
             if (userPO != null) {
-                if ("0".equals(userPO.getIsDelete())) {
+                if (UserConst.USER_IS_DELETE.equals(userPO.getIsDelete())) {
                     throw new BizException(ExceptionEnum.USER_HAD_EXIST_IS_DELETED);
                 }
                 throw new BizException(ExceptionEnum.USER_USERNAME_NUMBER_HAD_EXIST);
@@ -93,7 +95,7 @@ public class LoginServiceImpl implements LoginService {
         userPO.setBirthday(signUpDTO.getBirthday());
         userPO.setPhoneNumber(signUpDTO.getPhoneNumber());
         userPO.setGender(signUpDTO.getGender());
-        RolePO rolePO = roleService.selectRoleByRoleRight("ROLE_NA");
+        RolePO rolePO = roleService.selectRoleByRoleRight(RoleConst.ROLE_RIGHT_NA);
         userPO.setRoleId(rolePO.getRoleId());
         //base64 for image
         userPO.setAvatar(signUpDTO.getAvatar());
@@ -116,11 +118,11 @@ public class LoginServiceImpl implements LoginService {
 
 //        UserPO userPO = userService.getUserByUsername(username);
         UserVO userVO = userService.getUserByUserUuidOrUsername(null, username);
-        if (null == userVO || "1".equals(userVO.getIsDelete())) {
+        if (null == userVO || UserConst.USER_IS_DELETE.equals(userVO.getIsDelete())) {
             throw new BizException(ExceptionEnum.USER_NOT_EXIST);
         }
 
-        if ("Suspend".equals(userVO.getUserStatus())) {
+        if (UserConst.USER_STATUS_SUSPEND.equals(userVO.getUserStatus())) {
             throw new BizException(ExceptionEnum.USER_HAVE_NOT_ACTIVE);
         }
         if (userVO.getAccessRights().size() < 1) {
@@ -168,7 +170,7 @@ public class LoginServiceImpl implements LoginService {
         loginVO.setAccessToken(sessionId);
         stringRedisTemplate.opsForValue().set(username, sessionId, jwtProperty.getRefreshExpire(), TimeUnit.MINUTES);
         loginMapper.updateLoginTime(username);
-        logger.info("LoginServiceImpl, login successfully with username-{}", username);
+        logger.info("LoginServiceImpl, login successfully with loginVO-{}", loginVO);
         return loginVO;
     }
 
@@ -180,6 +182,7 @@ public class LoginServiceImpl implements LoginService {
             stringRedisTemplate.delete(sessionId);
         }
         stringRedisTemplate.delete(username);
+        logger.info("LoginServiceImpl - User: {} logout successfully!", username);
     }
 
     @Override
@@ -187,6 +190,7 @@ public class LoginServiceImpl implements LoginService {
         logger.info("LoginServiceImpl, activeUser - User: {}", username);
         if (!StringUtils.isEmpty(username)) {
             loginMapper.activeUserByUsername(username);
+            logger.info("LoginServiceImpl - User: {} activeUser successfully", username);
             return;
         }
         throw new BizException(ExceptionEnum.VALIDATE_ERROR);

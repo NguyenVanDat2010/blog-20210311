@@ -99,6 +99,7 @@
     update blog_user
     <set>
         is_delete = '1',
+        user_status = 'Delete',
     </set>
     where user_uuid = #{userUuid,jdbcType=VARCHAR}
   </update>

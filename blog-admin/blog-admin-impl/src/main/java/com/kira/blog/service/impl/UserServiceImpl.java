@@ -2,6 +2,7 @@ package com.kira.blog.service.impl;
 
 import com.kira.blog.constant.ExceptionEnum;
 import com.kira.blog.constant.GlobalConst;
+import com.kira.blog.constant.UserConst;
 import com.kira.blog.exception.BizException;
 import com.kira.blog.mapper.UserMapper;
 import com.kira.blog.pojo.dto.UpdateUserDTO;
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService {
         if (ObjectUtils.isEmpty(userPO)) {
             throw new BizException(ExceptionEnum.USER_NOT_EXIST);
         }
-        if ("Suspend".equals(userPO.getUserStatus())) {
+        if (UserConst.USER_STATUS_SUSPEND.equals(userPO.getUserStatus())) {
             throw new BizException(ExceptionEnum.USER_HAVE_NOT_ACTIVE);
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
