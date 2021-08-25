@@ -16,6 +16,8 @@ public interface UserService {
 
     void updateUser(UpdateUserDTO updateUserDTO, String username);
 
+    UserPO getUserByUserUuid(String userUuid);
+
     UserVO getUserByUserUuidOrUsername(String userUuid, String username);
 
     void deleteUserByUserUuid(String userUuid, String username);

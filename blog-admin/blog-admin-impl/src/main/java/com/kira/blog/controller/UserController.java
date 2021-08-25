@@ -42,9 +42,9 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseBase<UserVO1> getUserByUsername(String username) {
-        logger.info("UserController, getUserByUserUuid with username is {}", username);
-        UserPO userPO = userService.getUserByUsername(username);
+    public ResponseBase<UserVO1> getUserByUserUuid(String userUuid) {
+        logger.info("UserController, getUserByUserUuid with username is {}", userUuid);
+        UserPO userPO = userService.getUserByUserUuid(userUuid);
         UserVO1 userVO1 = new UserVO1();
         BeanUtils.copyProperties(userPO, userVO1);
         return ResponseUtils.ok(userVO1);

@@ -30,8 +30,8 @@ public interface UserApi {
                             @RequestHeader("username") String username);
 
     @ApiOperation("Get user by userUuid")
-    @GetMapping("{get-user}")
-    ResponseBase<UserVO1> getUserByUsername(@RequestHeader("username") String username);
+    @GetMapping("{userUuid}")
+    ResponseBase<UserVO1> getUserByUserUuid(@PathVariable("userUuid") String userUuid);
 
     @ApiOperation("Get list user")
     @GetMapping()

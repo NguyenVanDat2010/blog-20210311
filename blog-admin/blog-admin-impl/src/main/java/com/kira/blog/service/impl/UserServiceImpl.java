@@ -59,11 +59,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO getUserByUserUuidOrUsername(String userUuid, String username) {
-        logger.info("UserServiceImpl - getUserByUserUuid with userUuid is {} and username is {}", userUuid, username);
+        logger.info("UserServiceImpl - getUserByUserUuidOrUsername with userUuid is {} and username is {}", userUuid, username);
         if (userUuid == null && username == null) {
             throw new BizException(ExceptionEnum.USER_PARAM_IS_NULL);
         }
         return userMapper.getUserByUserUuidOrUsername(userUuid, username);
+    }
+
+    @Override
+    public UserPO getUserByUserUuid(String userUuid) {
+        logger.info("UserServiceImpl - getUserByUserUuid with userUuid is {}", userUuid);
+        if (userUuid == null) {
+            throw new BizException(ExceptionEnum.VALIDATE_ERROR);
+        }
+        UserPO userPO = userMapper.selectByPrimaryKey(userUuid);
+        if (!ObjectUtils.isEmpty(userPO)) {
+            return userPO;
+        }
+        throw new BizException(ExceptionEnum.USER_NOT_EXIST);
     }
 
     //check them neu la superAdmin thi se update duoc all status
