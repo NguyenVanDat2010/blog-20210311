@@ -1,11 +1,10 @@
 package com.kira.blog.pojo.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kira.blog.annotation.validation.ValidParamRange;
 import com.kira.blog.annotation.validation.ValidRegex;
 import lombok.Data;
 
-import static com.kira.blog.constant.ApplicationConst.*;
+import static com.kira.blog.constant.BlogConst.*;
 
 @Data
 //@JsonInclude(JsonInclude.Include.NON_NULL)

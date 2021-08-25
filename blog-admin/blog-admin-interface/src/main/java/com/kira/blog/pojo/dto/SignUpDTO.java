@@ -5,7 +5,7 @@ import com.kira.blog.annotation.validation.ValidParamRange;
 import com.kira.blog.annotation.validation.ValidRegex;
 import lombok.Data;
 
-import static com.kira.blog.constant.ApplicationConst.*;
+import static com.kira.blog.constant.BlogConst.*;
 
 @Data
 public class SignUpDTO {
@@ -37,7 +37,7 @@ public class SignUpDTO {
     private String phoneNumber;
 
     @NotEmpty(message = "Gender is required")
-    @ValidParamRange(paramRange = PARAM_GENDER, message = "Error gender, it should be in (male, female, other)")
+    @ValidParamRange(paramRange = PARAM_GENDER, message = "Error gender, it should be in (Male, Female, Other)")
     private String gender;
 
     @ValidRegex(regex = REGEX_BASE64_IMAGE, message = "Bas64 image should be start by \"data:image/{formatImage};base64,{base64String}\"")

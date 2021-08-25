@@ -22,12 +22,14 @@ public interface UserApi {
     @PutMapping("{userUuid}")
     ResponseBase updateUser(@PathVariable("userUuid") String userUuid,
                             @RequestHeader("username") String username,
+                            @RequestHeader("roleRight") String roleRight,
                             @Validated @RequestBody UpdateUserDTO updateUserDTO);
 
     @ApiOperation("Delete user by Id")
     @DeleteMapping("{userUuid}")
     ResponseBase deleteUser(@PathVariable("userUuid") String userUuid,
-                            @RequestHeader("username") String username);
+                            @RequestHeader("username") String username,
+                            @RequestHeader("roleRight") String roleRight);
 
     @ApiOperation("Get user by userUuid")
     @GetMapping("{userUuid}")

@@ -81,11 +81,15 @@ public class UserServiceImpl implements UserService {
 
     //check them neu la superAdmin thi se update duoc all status
     @Override
-    public void updateUser(UpdateUserDTO updateUserDTO, String username) {
+    public void updateUser(UpdateUserDTO updateUserDTO, String username, String roleRight) {
         logger.info("UserServiceImpl - updateUser with userUuid is {}", updateUserDTO.getUserUuid());
         UserPO userPO = userMapper.selectByPrimaryKey(updateUserDTO.getUserUuid());
         if (ObjectUtils.isEmpty(userPO)) {
             throw new BizException(ExceptionEnum.USER_NOT_EXIST);
+        }
+        boolean withCheck = RoleValidateUtil.roleNeedCheck(roleRight);
+        if (!userPO.getUsername().equals(username) && !withCheck) {
+            throw new BizException(ExceptionEnum.USER_HAVE_NO_PERMISSION);
         }
         if (UserConst.USER_STATUS_SUSPEND.equals(userPO.getUserStatus())) {
             throw new BizException(ExceptionEnum.USER_HAVE_NOT_ACTIVE);
@@ -126,12 +130,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserByUserUuid(String userUuid, String username) {
+    public void deleteUserByUserUuid(String userUuid, String username, String roleRight) {
         logger.info("UserServiceImpl - deleteUserByUserUuid with userUuid is {}", userUuid);
         UserPO userPO = userMapper.selectByPrimaryKey(userUuid);
-        loginService.logout(userPO.getUsername(), null);
-        userMapper.deleteUserByUserUuid(userUuid, username);
-        logger.info("Delete user successfully!");
+        if (!ObjectUtils.isEmpty(userPO)){
+            boolean withCheck = RoleValidateUtil.roleNeedCheck(roleRight);
+            if (!userPO.getUsername().equals(username) && !withCheck) {
+                throw new BizException(ExceptionEnum.USER_HAVE_NO_PERMISSION);
+            }
+            loginService.logout(userPO.getUsername(), null);
+            userMapper.deleteUserByUserUuid(userUuid, username);
+            logger.info("Delete user successfully!");
+        }
+        throw new BizException(ExceptionEnum.USER_NOT_EXIST);
     }
 
 //    @Override

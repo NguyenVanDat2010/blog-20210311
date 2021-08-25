@@ -1,6 +1,6 @@
 package com.kira.blog.constant;
 
-public interface ApplicationConst {
+public interface BlogConst {
     int MIN_AGE = 18;
 
     String FORMAT_BIRTH_DATE_APPLICANT = "yyMMdd";
@@ -27,10 +27,12 @@ public interface ApplicationConst {
 
     String REGEX_BASE64_IMAGE = "data:image\\/(jpg|png|jpeg|bmp);base64,([^\\\"]*)";
 
-    String PARAM_GENDER = "male, female, other";
+    String PARAM_GENDER = "Male, Female, Other";
+
+    //Ex: ROLE_USER
+    String REGEX_ROLE = "^[ROLE_]+([A-Z]\\S[^a-z][^0-9][^\\W])+$";
 
     //Resend up to 2 times in an interval of 30 seconds after
     int TIME_INTERVAL_RESEND = 30;
-
 
 }

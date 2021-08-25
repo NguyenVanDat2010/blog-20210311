@@ -101,8 +101,9 @@
         is_delete = '1',
         user_status = 'Delete',
       <if test="username != null and username != ''">
-        updated_by = #{username,jdbcType=LONGVARCHAR}
+        updated_by = #{username,jdbcType=LONGVARCHAR},
       </if>
+        updated_date = NOW()
     </set>
     where user_uuid = #{userUuid,jdbcType=VARCHAR}
   </update>
@@ -376,6 +377,9 @@
       <if test="updatedBy != null and updatedBy != ''">
         updated_by = #{updatedBy,jdbcType=VARCHAR},
       </if>
+      <if test="updatedDate != null">
+        updated_date = NOW(),
+      </if>
       <if test="avatar != null and avatar != ''">
         avatar = #{avatar,jdbcType=LONGVARCHAR},
       </if>
@@ -402,7 +406,7 @@
       created_by = #{createdBy,jdbcType=VARCHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       updated_by = #{updatedBy,jdbcType=VARCHAR},
-      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      updated_date = NOW(),
       avatar = #{avatar,jdbcType=LONGVARCHAR}
     where user_uuid = #{userUuid,jdbcType=VARCHAR}
   </update>
@@ -426,7 +430,7 @@
       created_by = #{createdBy,jdbcType=VARCHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       updated_by = #{updatedBy,jdbcType=VARCHAR},
-      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
+      updated_date = NOW()
     where user_uuid = #{userUuid,jdbcType=VARCHAR}
   </update>
 

@@ -28,7 +28,7 @@ CREATE TABLE `blog`.`blog_role`
     `role_id`      bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'user role id',
     `role_name`    varchar(50) NOT NULL COMMENT 'role name',
     `role_right`   varchar(5)  NOT NULL DEFAULT 'ROLE_USER' COMMENT 'role right, ROLE_MC-Macker and Checker flow(As Admin); ROLE_NA-No accept; ROLE_SAD-Supper admin, ROLE_USER is User',
-    `role_status`  char(1)              DEFAULT '1' NOT NULL COMMENT 'role status: 0-Delete, 1-Exist',
+    `role_status`  char(1)              DEFAULT '0' NOT NULL COMMENT 'role status: 0-Delete, 1-Exist',
     `is_edit`      char(2)     NOT NULL DEFAULT '0' COMMENT 'role is edited? 0: no-edit; 1: edit',
     `created_by`   varchar(50)          DEFAULT 'system' COMMENT 'created by',
     `created_date` datetime             DEFAULT CURRENT_TIMESTAMP,

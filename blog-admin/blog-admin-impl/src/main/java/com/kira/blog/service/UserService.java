@@ -14,13 +14,13 @@ public interface UserService {
 
     int saveUser(UserPO record);
 
-    void updateUser(UpdateUserDTO updateUserDTO, String username);
+    void updateUser(UpdateUserDTO updateUserDTO, String username, String roleRight);
 
     UserPO getUserByUserUuid(String userUuid);
 
     UserVO getUserByUserUuidOrUsername(String userUuid, String username);
 
-    void deleteUserByUserUuid(String userUuid, String username);
+    void deleteUserByUserUuid(String userUuid, String username, String roleRight);
 
 //    List<UserVO> getListUsers(UserListDTO userListDTO);
 

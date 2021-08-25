@@ -22,9 +22,9 @@ public class RoleController implements RoleApi {
     private RoleService roleService;
 
     @Override
-    public ResponseBase createRole(String roleRight, RoleDTO roleDTO) {
-        logger.info("RoleController, createRole with roleRight-{}, roleDTO-{}", roleRight, roleDTO);
-//        roleService.createRole(roleRight, roleDTO);
+    public ResponseBase createRole(String username, String roleRight, RoleDTO roleDTO) {
+        logger.info("RoleController, User-{}, createRole with roleRight-{}, roleDTO-{}", username, roleRight, roleDTO);
+        roleService.createRole(username, roleRight, roleDTO);
         return ResponseUtils.ok();
     }
 }
