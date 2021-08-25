@@ -100,6 +100,9 @@
     <set>
         is_delete = '1',
         user_status = 'Delete',
+      <if test="username != null and username != ''">
+        updated_by = #{username,jdbcType=LONGVARCHAR}
+      </if>
     </set>
     where user_uuid = #{userUuid,jdbcType=VARCHAR}
   </update>
@@ -367,9 +370,9 @@
       <if test="whenCreated != null and whenCreated != ''">
         when_created = #{whenCreated,jdbcType=VARCHAR},
       </if>
-      <if test="createdBy != null and createdBy != ''">
-        created_by = #{createdBy,jdbcType=VARCHAR},
-      </if>
+<!--      <if test="createdBy != null and createdBy != ''">-->
+<!--        created_by = #{createdBy,jdbcType=VARCHAR},-->
+<!--      </if>-->
       <if test="updatedBy != null and updatedBy != ''">
         updated_by = #{updatedBy,jdbcType=VARCHAR},
       </if>

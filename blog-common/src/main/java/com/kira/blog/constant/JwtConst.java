@@ -2,7 +2,7 @@ package com.kira.blog.constant;
 
 public interface JwtConst {
 
-    String USER_UUID = "userUuid";
+//    String USER_UUID = "userUuid";
 
     String USERNAME = "username";
 
@@ -12,6 +12,6 @@ public interface JwtConst {
 
     String ROLE_STATUS = "roleStatus";
 
-    String USER_ROLES = "userRoles";
+//    String USER_ROLES = "userRoles";
 
 }

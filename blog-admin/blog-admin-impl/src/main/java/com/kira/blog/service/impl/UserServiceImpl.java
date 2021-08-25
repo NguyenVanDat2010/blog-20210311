@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     //check them neu la superAdmin thi se update duoc all status
     @Override
-    public void updateUser(UpdateUserDTO updateUserDTO) {
+    public void updateUser(UpdateUserDTO updateUserDTO, String username) {
         logger.info("UserServiceImpl - updateUser with userUuid is {}", updateUserDTO.getUserUuid());
         UserPO userPO = userMapper.selectByPrimaryKey(updateUserDTO.getUserUuid());
         if (ObjectUtils.isEmpty(userPO)) {
@@ -78,11 +78,11 @@ public class UserServiceImpl implements UserService {
             throw new BizException(ExceptionEnum.USER_HAVE_NOT_ACTIVE);
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (!ObjectUtils.isEmpty(updateUserDTO.getNewPassword()) || !ObjectUtils.isEmpty(updateUserDTO.getConfirmPassword())) {
-            if (ObjectUtils.isEmpty(updateUserDTO.getOldPassword()) || !encoder.matches(updateUserDTO.getOldPassword(), userPO.getPassword())) {
+        if (!StringUtils.isEmpty(updateUserDTO.getNewPassword()) || !StringUtils.isEmpty(updateUserDTO.getConfirmPassword())) {
+            if (StringUtils.isEmpty(updateUserDTO.getOldPassword()) || !encoder.matches(updateUserDTO.getOldPassword(), userPO.getPassword())) {
                 throw new BizException(ExceptionEnum.USER_WRONG_PASSWORD);
             }
-            if (ObjectUtils.isEmpty(updateUserDTO.getNewPassword()) || !updateUserDTO.getNewPassword().equals(updateUserDTO.getConfirmPassword())) {
+            if (StringUtils.isEmpty(updateUserDTO.getNewPassword()) || !updateUserDTO.getNewPassword().equals(updateUserDTO.getConfirmPassword())) {
                 throw new BizException(ExceptionEnum.USER_PASSWORD_NOT_EQUAL_CONFIRM_PASSWORD);
             }
             userPO.setPassword(encodePassword(updateUserDTO.getNewPassword()));
@@ -90,31 +90,34 @@ public class UserServiceImpl implements UserService {
             userPO.setOldPassword(userPO.getPassword());
         }
 
-        if (!ObjectUtils.isEmpty(updateUserDTO.getFullName())) {
+        if (!StringUtils.isEmpty(updateUserDTO.getFullName())) {
             userPO.setFullName(updateUserDTO.getFullName());
         }
-        if (!ObjectUtils.isEmpty(updateUserDTO.getBirthday())) {
+        if (!StringUtils.isEmpty(updateUserDTO.getBirthday())) {
             userPO.setBirthday(updateUserDTO.getBirthday());
         }
-        if (!ObjectUtils.isEmpty(updateUserDTO.getPhoneNumber())) {
+        if (!StringUtils.isEmpty(updateUserDTO.getPhoneNumber())) {
             userPO.setPhoneNumber(updateUserDTO.getPhoneNumber());
         }
-        if (!ObjectUtils.isEmpty(updateUserDTO.getGender())) {
+        if (!StringUtils.isEmpty(updateUserDTO.getGender())) {
             userPO.setGender(updateUserDTO.getGender());
         }
-        if (!ObjectUtils.isEmpty(updateUserDTO.getAvatar())) {
+        if (!StringUtils.isEmpty(updateUserDTO.getAvatar())) {
             userPO.setAvatar(updateUserDTO.getAvatar());
+        }
+        if (!StringUtils.isEmpty(username)) {
+            userPO.setUpdatedBy(username);
         }
         userMapper.updateByPrimaryKeySelective(userPO);
         logger.info("Update user successfully!");
     }
 
     @Override
-    public void deleteUserByUserUuid(String userUuid) {
+    public void deleteUserByUserUuid(String userUuid, String username) {
         logger.info("UserServiceImpl - deleteUserByUserUuid with userUuid is {}", userUuid);
         UserPO userPO = userMapper.selectByPrimaryKey(userUuid);
         loginService.logout(userPO.getUsername(), null);
-        userMapper.deleteUserByUserUuid(userUuid);
+        userMapper.deleteUserByUserUuid(userUuid, username);
         logger.info("Delete user successfully!");
     }
 
@@ -130,7 +133,7 @@ public class UserServiceImpl implements UserService {
         try {
             // 1. compare roleRight if need to do the maker-checker flow.
             boolean withCheck = RoleValidateUtil.roleNeedCheck(roleRight);
-            if (!withCheck){
+            if (!withCheck) {
                 throw new BizException(ExceptionEnum.USER_HAVE_NO_PERMISSION);
             }
             Long startDay;

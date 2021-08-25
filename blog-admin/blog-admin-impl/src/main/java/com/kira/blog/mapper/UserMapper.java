@@ -31,7 +31,7 @@ public interface UserMapper {
 
     UserVO getUserByUserUuidOrUsername(@Param("userUuid") String userUuid, @Param("username") String username);
 
-    int deleteUserByUserUuid(@Param("userUuid") String userUuid);
+    int deleteUserByUserUuid(@Param("userUuid") String userUuid, @Param("username") String username);
 
     List<UserManagerVO2> getListUsers(UserListDTO userListDTO);
 

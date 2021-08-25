@@ -56,7 +56,7 @@ public class AuthFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
-//        String method = ctx.getRequest().getMethod();
+        //String method = ctx.getRequest().getMethod();
         HttpServletRequest request = ctx.getRequest();
         String requestURI = request.getRequestURI();
         return (!isAllowPath(requestURI));
@@ -128,11 +128,11 @@ public class AuthFilter extends ZuulFilter {
             return null;
         }
         //Set header cho request ben admin va app voi headers la username, roleRight, roleStatus
-        ctx.addZuulRequestHeader("userUuid", infoFromToken.getUserUuid());
+        //ctx.addZuulRequestHeader("deviceId", infoFromToken.getDeviceId());
+        //ctx.addZuulRequestHeader("userUuid", infoFromToken.getUserUuid());
         ctx.addZuulRequestHeader("username", infoFromToken.getUsername());
         ctx.addZuulRequestHeader("roleRight", infoFromToken.getRoleRight());
         ctx.addZuulRequestHeader("roleStatus", infoFromToken.getRoleStatus());
-        //ctx.addZuulRequestHeader("deviceId", infoFromToken.getDeviceId());
         return null;
     }
 }

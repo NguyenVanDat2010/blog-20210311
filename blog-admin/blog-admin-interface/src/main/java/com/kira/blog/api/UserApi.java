@@ -19,13 +19,15 @@ public interface UserApi {
      */
 
     @ApiOperation("Update user by Id")
-    @PutMapping("update-user")
-    ResponseBase updateUser(@RequestHeader("userUuid") String userUuid,
+    @PutMapping("{userUuid}")
+    ResponseBase updateUser(@PathVariable("userUuid") String userUuid,
+                            @RequestHeader("username") String username,
                             @Validated @RequestBody UpdateUserDTO updateUserDTO);
 
     @ApiOperation("Delete user by Id")
-    @DeleteMapping("delete-user")
-    ResponseBase deleteUser(@RequestHeader("userUuid") String userUuid);
+    @DeleteMapping("{userUuid}")
+    ResponseBase deleteUser(@PathVariable("userUuid") String userUuid,
+                            @RequestHeader("username") String username);
 
     @ApiOperation("Get user by userUuid")
     @GetMapping("{get-user}")

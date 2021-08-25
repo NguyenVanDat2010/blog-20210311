@@ -3,6 +3,7 @@ package com.kira.blog.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.kira.blog.config.JwtProperty;
 import com.kira.blog.constant.ExceptionEnum;
+import com.kira.blog.constant.GlobalConst;
 import com.kira.blog.constant.RoleConst;
 import com.kira.blog.constant.UserConst;
 import com.kira.blog.domain.JwtPayload;
@@ -73,7 +74,7 @@ public class LoginServiceImpl implements LoginService {
         if (countUserExists > 0) {
             userPO = userService.getUserByUsername(signUpDTO.getUsername());
             if (userPO != null) {
-                if (UserConst.USER_IS_DELETE.equals(userPO.getIsDelete())) {
+                if (GlobalConst.IS_DELETE.equals(userPO.getIsDelete())) {
                     throw new BizException(ExceptionEnum.USER_HAD_EXIST_IS_DELETED);
                 }
                 throw new BizException(ExceptionEnum.USER_USERNAME_NUMBER_HAD_EXIST);
@@ -118,7 +119,7 @@ public class LoginServiceImpl implements LoginService {
 
 //        UserPO userPO = userService.getUserByUsername(username);
         UserVO userVO = userService.getUserByUserUuidOrUsername(null, username);
-        if (null == userVO || UserConst.USER_IS_DELETE.equals(userVO.getIsDelete())) {
+        if (null == userVO || GlobalConst.IS_DELETE.equals(userVO.getIsDelete())) {
             throw new BizException(ExceptionEnum.USER_NOT_EXIST);
         }
 

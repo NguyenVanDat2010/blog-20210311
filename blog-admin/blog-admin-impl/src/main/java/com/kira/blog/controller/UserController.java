@@ -27,17 +27,17 @@ public class UserController implements UserApi {
     private UserService userService;
 
     @Override
-    public ResponseBase updateUser(String userUuid, UpdateUserDTO updateUserDTO) {
+    public ResponseBase updateUser(String userUuid, String username, UpdateUserDTO updateUserDTO) {
         logger.info("UserController, updateUser with userUuid is {}", userUuid);
         updateUserDTO.setUserUuid(userUuid);
-        userService.updateUser(updateUserDTO);
+        userService.updateUser(updateUserDTO, username);
         return ResponseUtils.ok();
     }
 
     @Override
-    public ResponseBase deleteUser(String userUuid) {
+    public ResponseBase deleteUser(String userUuid, String username) {
         logger.info("UserController, deleteUser with userUuid is {}", userUuid);
-        userService.deleteUserByUserUuid(userUuid);
+        userService.deleteUserByUserUuid(userUuid, username);
         return ResponseUtils.ok();
     }
 

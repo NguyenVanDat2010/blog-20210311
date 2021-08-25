@@ -10,9 +10,21 @@ public class RoleValidateUtil {
         boolean withCheck;
         if (RoleConst.ROLE_RIGHT_NA.equals(roleRight) || RoleConst.ROLE_RIGHT_USER.equals(roleRight)) {
             withCheck = false;
-        } else if (RoleConst.ROLE_RIGHT_MC.equals(roleRight) || RoleConst.ROLE_RIGHT_SAD.equals(roleRight)) {
+        } else if (RoleConst.ROLE_RIGHT_SAD.equals(roleRight) || RoleConst.ROLE_RIGHT_MC.equals(roleRight)) {
             withCheck = true;
         } else {
+            throw new BizException("988888", "Bad role right");
+        }
+        return withCheck;
+    }
+
+    public static boolean roleSADNeedCheck(String roleRight) {
+        boolean withCheck;
+        if (RoleConst.ROLE_RIGHT_NA.equals(roleRight) || RoleConst.ROLE_RIGHT_USER.equals(roleRight) || RoleConst.ROLE_RIGHT_MC.equals(roleRight)) {
+            withCheck = false;
+        } else if (RoleConst.ROLE_RIGHT_SAD.equals(roleRight)){
+            withCheck = true;
+        } else{
             throw new BizException("988888", "Bad role right");
         }
         return withCheck;
