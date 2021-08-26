@@ -3,6 +3,7 @@ package com.kira.blog.pojo.dto;
 import com.kira.blog.annotation.validation.NotEmpty;
 import com.kira.blog.annotation.validation.ValidParamRange;
 import com.kira.blog.annotation.validation.ValidRegex;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import static com.kira.blog.constant.BlogConst.*;
@@ -42,4 +43,9 @@ public class SignUpDTO {
 
     @ValidRegex(regex = REGEX_BASE64_IMAGE, message = "Bas64 image should be start by \"data:image/{formatImage};base64,{base64String}\"")
     private String avatar;
+
+    //@ApiModelProperty(value = "Image file type. Accepted types are jpg and png", required = true)
+    @ValidRegex(regex = REGEX_TYPE_IMAGE, message = "Image file type. Accepted types are jpg, png or jpeg")
+    private String imageType;
+
 }

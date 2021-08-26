@@ -72,6 +72,7 @@ CREATE TABLE `blog`.`blog_user`
     `phone_number`    varchar(100) NOT NULL COMMENT 'phone number of user',
     `gender`          varchar(100) NOT NULL COMMENT 'gender of user',
     `avatar`          TEXT                  DEFAULT NULL COMMENT 'avatar of user',
+    `image_type`      varchar (100)         DEFAULT NULL COMMENT 'Image file type. Accepted types are jpg, png or jpeg',
     `user_status`     varchar(10)           DEFAULT 'Suspend' COMMENT 'user status: Active, Suspend, Delete',
     `is_edit`         char(2)      NOT NULL DEFAULT '0' COMMENT 'is edit: 0-not edit 1-edit',
     `is_delete`       char(2)      NOT NULL DEFAULT '0' COMMENT 'event whether delete. 0: not delete; 1: delete',

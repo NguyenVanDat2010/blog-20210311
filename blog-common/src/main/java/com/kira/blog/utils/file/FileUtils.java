@@ -117,7 +117,7 @@ public final class FileUtils extends FileCommonUtils {
      * @author xiaoyu
      * Date 2019-10-15
      */
-    public static String readEmailTempalte(String emailTemplateFileName) {
+    public static String readEmailTemplate(String emailTemplateFileName) {
         return readClasspathFile(EMAIL_TEMPLATE_LOCATION + emailTemplateFileName);
     }
 

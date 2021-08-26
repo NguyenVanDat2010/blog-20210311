@@ -162,12 +162,6 @@ public class UserServiceImpl implements UserService {
         throw new BizException(ExceptionEnum.USER_NOT_EXIST);
     }
 
-//    @Override
-//    public List<UserVO> getListUsers(UserListDTO userListDTO) {
-//        logger.info("UserServiceImpl - getListUsers");
-//        return userMapper.getListUsers(userListDTO);
-//    }
-
     @Override
     public Page<UserManagerVO2> listUsers(String roleRight, String pageNo, String pageSize, String startTime, String endTime) {
         logger.info("UserServiceImpl - listUsers, pageNo={}, pageSize={}, startTime={}, endTime={}", pageNo, pageSize, startTime, endTime);

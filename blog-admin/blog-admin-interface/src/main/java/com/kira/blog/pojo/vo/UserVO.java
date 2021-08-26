@@ -46,6 +46,10 @@ public class UserVO {
 
     private Date updatedDate;
 
+    private String avatar;
+
+    private String imageType;
+
     private List<AccessRightPO> accessRights;
 
 }

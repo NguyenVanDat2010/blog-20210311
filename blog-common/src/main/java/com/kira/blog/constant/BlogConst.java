@@ -27,6 +27,8 @@ public interface BlogConst {
 
     String REGEX_BASE64_IMAGE = "data:image\\/(jpg|png|jpeg|bmp);base64,([^\\\"]*)";
 
+    String REGEX_TYPE_IMAGE = "(jpg|png|jpeg)";
+
     String PARAM_GENDER = "Male, Female, Other";
 
     //Ex: ROLE_USER

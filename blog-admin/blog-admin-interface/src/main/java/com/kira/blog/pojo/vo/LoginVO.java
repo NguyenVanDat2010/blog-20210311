@@ -23,4 +23,8 @@ public class LoginVO {
 //    private List<AccessRightPO> accessRights;
 
     private String accessToken;
+
+    private String avatar;
+
+//    private String imageType;
 }

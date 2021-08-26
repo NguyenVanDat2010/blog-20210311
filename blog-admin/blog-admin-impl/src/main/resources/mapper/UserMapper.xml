@@ -48,6 +48,8 @@
     <result column="when_created" property="whenCreated"/>
     <result column="created_date" property="createdDate"/>
     <result column="updated_date" property="updatedDate"/>
+    <result column="avatar" property="avatar"/>
+    <result column="image_type" property="imageType"/>
     <collection property="accessRights" ofType="com.kira.blog.pojo.po.AccessRightPO">
       <result column="module_code" property="moduleCode"/>
       <result column="access_right" property="accessRight"/>
@@ -470,6 +472,8 @@
       bu.user_status,
       bu.is_edit,
       bu.is_delete,
+      bu.avatar,
+      bu.image_type,
       br.role_name,
       br.role_right,
       br.role_status,

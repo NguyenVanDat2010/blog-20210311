@@ -23,6 +23,8 @@ public abstract class FileCommonUtils {
 
     protected static final String PUSH_NOTIFICATION_TEMPLATE_LOCATION = "push/template/";
 
+    protected static final String BASE64_PREFIX_IMAGE_1 = "data:image/";
+
     /**
      * Generation filePath with fileName and fileExtension.
      *
@@ -85,11 +87,28 @@ public abstract class FileCommonUtils {
      * @return
      */
     public static String removeBase64StringPrefix(String base64String) {
-        if (base64String.indexOf(FileCommonUtils.BASE64_PREFIX) != -1) {
+        if (base64String.contains(FileCommonUtils.BASE64_PREFIX)) {
             return base64String.substring(base64String.indexOf(FileCommonUtils.BASE64_PREFIX) +
                     FileCommonUtils.BASE64_PREFIX.length());
         }
 
         return base64String;
     }
+
+    /**
+     * Check if fileExtension is null will get from base64String
+     *
+     * @param base64String
+     * @param fileExtension
+     * @return
+     */
+    public static String getFileExtension(String base64String, String fileExtension) {
+        if (fileExtension == null && base64String.contains(FileCommonUtils.BASE64_PREFIX)) {
+            fileExtension = base64String.substring(base64String.indexOf(BASE64_PREFIX_IMAGE_1) +
+                    BASE64_PREFIX_IMAGE_1.length(), base64String.indexOf(BASE64_PREFIX));
+            return fileExtension;
+        }
+        return fileExtension;
+    }
+
 }

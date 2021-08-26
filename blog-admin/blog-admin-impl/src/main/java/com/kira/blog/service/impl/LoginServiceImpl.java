@@ -20,10 +20,12 @@ import com.kira.blog.service.LoginService;
 import com.kira.blog.service.RoleService;
 import com.kira.blog.service.UserService;
 import com.kira.blog.utils.JwtUtils;
+import com.kira.blog.utils.file.FileEncryptUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,6 +59,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
+    @Value("${blog.file.local.path.avatar}")
+    private String userImagePath;
 
     private final static String saveUserKey = "uc:create:";
 
@@ -101,7 +106,9 @@ public class LoginServiceImpl implements LoginService {
         RolePO rolePO = roleService.selectRoleByRoleRight(RoleConst.ROLE_RIGHT_USER);
         userPO.setRoleId(rolePO.getRoleId());
         //base64 for image
-        userPO.setAvatar(signUpDTO.getAvatar());
+        if (signUpDTO.getAvatar() != null) {
+            userPO.setAvatar(FileEncryptUtils.encryptAndUploadFile(userImagePath, signUpDTO.getAvatar(), signUpDTO.getImageType()));
+        }
         userService.saveUser(userPO, true);
 
         SignUpVO signUpVO = new SignUpVO();
@@ -115,7 +122,6 @@ public class LoginServiceImpl implements LoginService {
         logger.info("LoginServiceImpl - User: {} login", loginDTO.getUsername());
         String username = loginDTO.getUsername();
 
-//        UserPO userPO = userService.getUserByUsername(username);
         UserVO userVO = userService.getUserByUserUuidOrUsername(null, username);
         if (null == userVO || GlobalConst.IS_DELETE.equals(userVO.getIsDelete())) {
             throw new BizException(ExceptionEnum.USER_NOT_EXIST);
@@ -144,9 +150,11 @@ public class LoginServiceImpl implements LoginService {
                 stringRedisTemplate.delete(authInRedis);
             }
         }
-//        LoginVO loginVO = loginMapper.getUserByUsername(username);
         LoginVO loginVO = new LoginVO();
         BeanUtils.copyProperties(userVO, loginVO);
+        if (userVO.getAvatar()!=null){
+            loginVO.setAvatar(FileEncryptUtils.downloadDecryptFileEncodeBase64(userImagePath, userVO.getAvatar()));
+        }
 
         JwtPayload jwtPayload = new JwtPayload();
         BeanUtils.copyProperties(userVO, jwtPayload);
