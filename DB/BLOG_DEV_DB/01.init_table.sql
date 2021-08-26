@@ -75,7 +75,7 @@ CREATE TABLE `blog`.`blog_user`
     `user_status`     varchar(10)           DEFAULT 'Suspend' COMMENT 'user status: Active, Suspend, Delete',
     `is_edit`         char(2)      NOT NULL DEFAULT '0' COMMENT 'is edit: 0-not edit 1-edit',
     `is_delete`       char(2)      NOT NULL DEFAULT '0' COMMENT 'event whether delete. 0: not delete; 1: delete',
-    `last_login_time` datetime              DEFAULT CURRENT_TIMESTAMP,
+    `last_login_time` datetime              DEFAULT,
     `when_created`    varchar(30)           DEFAULT '',
     `created_by`      varchar(50)           DEFAULT 'system' COMMENT 'creator',
     `created_date`    datetime              DEFAULT CURRENT_TIMESTAMP,

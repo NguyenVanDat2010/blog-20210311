@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -49,6 +50,9 @@ public class LoginServiceImpl implements LoginService {
     private RoleService roleService;
 
     private static final String forceLoginFlag = "true";
+
+    @Resource
+    private PasswordEncoder encodePassword;
 
     @Resource
     private JwtProperty jwtProperty;
@@ -91,25 +95,21 @@ public class LoginServiceImpl implements LoginService {
         userPO.setFullName(signUpDTO.getFullName());
         userPO.setEmail(signUpDTO.getEmail());
         userPO.setUsername(signUpDTO.getUsername());
-        userPO.setPassword(encodePassword(signUpDTO.getPassword()));
-        userPO.setCfPassword(encodePassword(signUpDTO.getConfirmPassword()));
+        userPO.setPassword(encodePassword.encode(signUpDTO.getPassword()));
+        userPO.setCfPassword(encodePassword.encode(signUpDTO.getConfirmPassword()));
         userPO.setBirthday(signUpDTO.getBirthday());
         userPO.setPhoneNumber(signUpDTO.getPhoneNumber());
         userPO.setGender(signUpDTO.getGender());
-        RolePO rolePO = roleService.selectRoleByRoleRight(RoleConst.ROLE_RIGHT_NA);
+        RolePO rolePO = roleService.selectRoleByRoleRight(RoleConst.ROLE_RIGHT_USER);
         userPO.setRoleId(rolePO.getRoleId());
         //base64 for image
         userPO.setAvatar(signUpDTO.getAvatar());
-        userService.saveUser(userPO);
+        userService.saveUser(userPO, true);
 
         SignUpVO signUpVO = new SignUpVO();
         signUpVO.setUsername(signUpDTO.getUsername());
-        signUpVO.setMessage("LoginServiceImpl, Sign-up successfully, pls check your email to active your account. Thanks!");
+        signUpVO.setMessage("Sign-up successfully, pls check your email to active your account. Thanks!");
         return signUpVO;
-    }
-
-    private String encodePassword(String rawPassword) {
-        return new BCryptPasswordEncoder().encode(rawPassword);
     }
 
     @Override

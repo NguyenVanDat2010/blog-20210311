@@ -6,7 +6,7 @@ import com.kira.blog.constant.UserConst;
 import com.kira.blog.exception.BizException;
 import com.kira.blog.mapper.UserMapper;
 import com.kira.blog.pojo.dto.UpdateUserDTO;
-import com.kira.blog.pojo.dto.UserListDTO;
+import com.kira.blog.pojo.dto.ListQueryDTO;
 import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.UserManagerVO2;
 import com.kira.blog.pojo.vo.UserVO;
@@ -19,11 +19,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
-import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -39,6 +39,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private LoginService loginService;
 
+    @Resource
+    private PasswordEncoder encodePassword;
+
     @Override
     public UserPO getUserByUsername(String username) {
         logger.info("UserServiceImpl - getUserByUsername with username is {}", username);
@@ -52,9 +55,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int saveUser(UserPO record) {
-        logger.info("UserServiceImpl - saveUser with userPO is {}", record);
-        return userMapper.insertSelective(record);
+    public void saveUser(UserPO record, boolean isInsert) {
+        new Thread(() -> {
+            try {
+                if (isInsert) {
+                    userMapper.insertSelective(record);
+                } else {
+                    userMapper.updateByPrimaryKeySelective(record);
+                }
+            } catch (Exception ex) {
+                logger.error("Cannot save userPO: {}, {}", ex.getCause(), ex.getMessage());
+            }
+        }).start();
+        logger.info("Start async thread to save event log: {}", record);
     }
 
     @Override
@@ -102,8 +115,8 @@ public class UserServiceImpl implements UserService {
             if (StringUtils.isEmpty(updateUserDTO.getNewPassword()) || !updateUserDTO.getNewPassword().equals(updateUserDTO.getConfirmPassword())) {
                 throw new BizException(ExceptionEnum.USER_PASSWORD_NOT_EQUAL_CONFIRM_PASSWORD);
             }
-            userPO.setPassword(encodePassword(updateUserDTO.getNewPassword()));
-            userPO.setCfPassword(encodePassword(updateUserDTO.getConfirmPassword()));
+            userPO.setPassword(encodePassword.encode(updateUserDTO.getNewPassword()));
+            userPO.setCfPassword(encodePassword.encode(updateUserDTO.getConfirmPassword()));
             userPO.setOldPassword(userPO.getPassword());
         }
 
@@ -125,7 +138,7 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(username)) {
             userPO.setUpdatedBy(username);
         }
-        userMapper.updateByPrimaryKeySelective(userPO);
+        saveUser(userPO, false);
         logger.info("Update user successfully!");
     }
 
@@ -133,7 +146,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUserByUserUuid(String userUuid, String username, String roleRight) {
         logger.info("UserServiceImpl - deleteUserByUserUuid with userUuid is {}", userUuid);
         UserPO userPO = userMapper.selectByPrimaryKey(userUuid);
-        if (!ObjectUtils.isEmpty(userPO)){
+        if (!ObjectUtils.isEmpty(userPO)) {
             boolean withCheck = RoleValidateUtil.roleNeedCheck(roleRight);
             if (!userPO.getUsername().equals(username) && !withCheck) {
                 throw new BizException(ExceptionEnum.USER_HAVE_NO_PERMISSION);
@@ -171,14 +184,14 @@ public class UserServiceImpl implements UserService {
             }
             int pn = Integer.parseInt(pageNo);
             int ps = Integer.parseInt(pageSize);
-            UserListDTO userListDTO = new UserListDTO(pn, ps, (pn - 1) * ps, startDay, endDay);
-            Integer total = userMapper.countUsers(userListDTO);
+            ListQueryDTO listQueryDTO = new ListQueryDTO(pn, ps, (pn - 1) * ps, startDay, endDay);
+            int total = userMapper.countUsers(listQueryDTO);
             if (total == 0) {
                 return new Page<>(GlobalConst.DEFAULT_PAGE_NO, GlobalConst.DEFAULT_PAGE_SIZE, 0, null);
             }
-            List<UserManagerVO2> appList = userMapper.getListUsers(userListDTO);
+            List<UserManagerVO2> appList = userMapper.getListUsers(listQueryDTO);
             logger.info("UserServiceImpl - Get list user successfully!");
-            return new Page<>(userListDTO.getPageNo(), userListDTO.getPageSize(), total, appList);
+            return new Page<>(listQueryDTO.getPageNo(), listQueryDTO.getPageSize(), total, appList);
         } catch (NumberFormatException ex) {
             logger.error("Get list application error, {}", ex.getMessage());
             throw new BizException(ExceptionEnum.USER_GET_LIST_WRONG_PARAM);
@@ -214,7 +227,7 @@ public class UserServiceImpl implements UserService {
 //        return newObject;
 //    }
 
-    private String encodePassword(String rawPassword) {
-        return new BCryptPasswordEncoder().encode(rawPassword);
-    }
+//    private String encodePassword(String rawPassword) {
+//        return new BCryptPasswordEncoder().encode(rawPassword);
+//    }
 }

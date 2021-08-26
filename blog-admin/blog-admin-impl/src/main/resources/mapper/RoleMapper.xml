@@ -146,4 +146,30 @@
     from blog_role
     where role_right = #{roleRight,jdbcType=VARCHAR}
   </select>
+
+  <select id="countRoles" resultType="java.lang.Integer">
+    select count(*) from blog_role br
+    where
+    1 = 1
+    <if test="startDay != '' and startDay != null">
+      AND
+      UNIX_TIMESTAMP(br.created_date) &gt;= #{startDay}
+      AND UNIX_TIMESTAMP(br.created_date) &lt;= #{endDay}
+    </if>
+  </select>
+
+  <select id="getListRoles" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from blog_role br
+    WHERE 1=1
+    <if test="startDay != '' and startDay != null">
+      AND
+      UNIX_TIMESTAMP(br.created_date) &gt;= #{startDay}
+      AND UNIX_TIMESTAMP(br.created_date) &lt;= #{endDay}
+    </if>
+    order by br.created_date desc
+    LIMIT #{offset},
+    #{pageSize};
+  </select>
 </mapper>

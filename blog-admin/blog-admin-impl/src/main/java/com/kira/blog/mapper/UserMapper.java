@@ -1,6 +1,6 @@
 package com.kira.blog.mapper;
 
-import com.kira.blog.pojo.dto.UserListDTO;
+import com.kira.blog.pojo.dto.ListQueryDTO;
 import com.kira.blog.pojo.po.UserPO;
 import com.kira.blog.pojo.vo.UserManagerVO2;
 import com.kira.blog.pojo.vo.UserVO;
@@ -27,15 +27,15 @@ public interface UserMapper {
 
     UserPO getUserByUsername(String username);
 
-    Integer countUserExists(@Param("email") String email, @Param("username") String username, @Param("phoneNumber") String phoneNumber);
+    int countUserExists(@Param("email") String email, @Param("username") String username, @Param("phoneNumber") String phoneNumber);
 
     UserVO getUserByUserUuidOrUsername(@Param("userUuid") String userUuid, @Param("username") String username);
 
     int deleteUserByUserUuid(@Param("userUuid") String userUuid, @Param("username") String username);
 
-    List<UserManagerVO2> getListUsers(UserListDTO userListDTO);
+    List<UserManagerVO2> getListUsers(ListQueryDTO listQueryDTO);
 
-    List<UserVO> listUsers(UserListDTO userListDTO);
+    List<UserVO> listUsers(ListQueryDTO listQueryDTO);
 
-    Integer countUsers(UserListDTO userListDTO);
+    int countUsers(ListQueryDTO listQueryDTO);
 }

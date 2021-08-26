@@ -12,7 +12,7 @@ public interface UserService {
 
     int countUserExists(String email, String username, String phoneNumber);
 
-    int saveUser(UserPO record);
+    void saveUser(UserPO record, boolean isInsert);
 
     void updateUser(UpdateUserDTO updateUserDTO, String username, String roleRight);
 

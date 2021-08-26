@@ -24,7 +24,7 @@ public enum ExceptionEnum {
     USER_IN_EDIT("600001", "User is in edit."),
     USER_WITH_NO_ROLE("600002", "User have no roles."),
     USER_IS_DELETE("600003", "User is delete."),
-    USER_HAD_EXIST("600004", "User had existed. "),
+    USER_HAD_EXIST("600004", "User had existed."),
     USER_WRONG_PASSWORD("600005", "User wrong password."),
     USER_PASSWORD_NOT_EQUAL_CONFIRM_PASSWORD("600006", "New password and confirm password is not equal."),
     USER_HAD_EXIST_IS_DELETED("600022", "User had deleted, Do you want to reactive it?"),
@@ -38,6 +38,8 @@ public enum ExceptionEnum {
 
     ROLE_NOT_EXIST("600007", "Role not exist."),
     ROLE_IN_EDIT("600008", "Role is in edit."),
+    ROLE_HAD_EXIST("600028", "Role had existed."),
+    ROLE_CANNOT_DELETE("600029", "Cannot delete this role."),
 
     TOKEN_GENERATED_ERROR("600009", "Fail to generate token."),
     TOKEN_EXPIRED("600010", "Access token expire. You have been logout!"),
