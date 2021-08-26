@@ -9,7 +9,6 @@ import com.kira.blog.constant.UserConst;
 import com.kira.blog.domain.JwtPayload;
 import com.kira.blog.exception.BizException;
 import com.kira.blog.mapper.LoginMapper;
-import com.kira.blog.mapper.UserMapper;
 import com.kira.blog.pojo.dto.LoginDTO;
 import com.kira.blog.pojo.dto.SignUpDTO;
 import com.kira.blog.pojo.po.RolePO;
@@ -29,7 +28,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.*;

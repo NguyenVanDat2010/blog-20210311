@@ -33,7 +33,9 @@ public interface UserApi {
 
     @ApiOperation("Get user by userUuid")
     @GetMapping("{userUuid}")
-    ResponseBase<UserVO1> getUserByUserUuid(@PathVariable("userUuid") String userUuid);
+    ResponseBase<UserVO1> getUserByUserUuid(@PathVariable("userUuid") String userUuid,
+                                            @RequestHeader("username") String username,
+                                            @RequestHeader("roleRight") String roleRight);
 
     @ApiOperation("Get list user")
     @GetMapping()

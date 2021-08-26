@@ -16,7 +16,7 @@ public interface UserService {
 
     void updateUser(UpdateUserDTO updateUserDTO, String username, String roleRight);
 
-    UserPO getUserByUserUuid(String userUuid);
+    UserPO getUserByUserUuid(String userUuid, String username, String roleRight);
 
     UserVO getUserByUserUuidOrUsername(String userUuid, String username);
 

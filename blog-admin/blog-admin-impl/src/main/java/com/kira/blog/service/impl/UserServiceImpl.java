@@ -80,12 +80,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPO getUserByUserUuid(String userUuid) {
+    public UserPO getUserByUserUuid(String userUuid, String username, String roleRight) {
         logger.info("UserServiceImpl - getUserByUserUuid with userUuid is {}", userUuid);
         if (userUuid == null) {
             throw new BizException(ExceptionEnum.VALIDATE_ERROR);
         }
         UserPO userPO = userMapper.selectByPrimaryKey(userUuid);
+        boolean withCheck = RoleValidateUtil.roleNeedCheck(roleRight);
+        if (!withCheck && !userPO.getUsername().equals(username)) {
+            throw new BizException(ExceptionEnum.USER_HAVE_NO_PERMISSION);
+        }
         if (!ObjectUtils.isEmpty(userPO)) {
             return userPO;
         }
